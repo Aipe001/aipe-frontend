@@ -1,14 +1,85 @@
-export default function Services() {
-    return (
-        <div className="py-12 bg-background min-h-screen">
-            <div className="page-container">
-                <h1 className="text-3xl font-display font-bold text-primary mb-8">
-                    Our Services
+"use client";
+
+import { useState } from "react";
+import { HeroImages } from "@/components/home/HeroImages";
+import { ServiceGrid } from "@/components/home/ServiceGrid";
+import { SpotlightSection } from "@/components/home/SpotlightSection";
+import { ServiceModal } from "@/components/home/ServiceModal";
+import { SlotBookingModal } from "@/components/home/SlotBookingModal";
+
+export default function Home() {
+  const [selectedService, setSelectedService] = useState<string | null>(null);
+  const [selectedSubService, setSelectedSubService] = useState<string | null>(
+    null,
+  );
+  const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
+  const [isSlotModalOpen, setIsSlotModalOpen] = useState(false);
+
+  const handleServiceClick = (serviceId: string) => {
+    setSelectedService(serviceId);
+    setIsServiceModalOpen(true);
+  };
+
+  const handleSubServiceClick = (subServiceId: string) => {
+    setSelectedSubService(subServiceId);
+    setIsServiceModalOpen(false);
+    setIsSlotModalOpen(true);
+  };
+
+  const handleCloseServiceModal = () => {
+    setIsServiceModalOpen(false);
+    setSelectedService(null);
+  };
+
+  const handleCloseSlotModal = () => {
+    setIsSlotModalOpen(false);
+    setSelectedSubService(null);
+  };
+
+  return (
+    <>
+      {/* Hero Section */}
+      <section className="py-12 bg-background">
+        <div className="page-container">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            {/* Left Column */}
+            <div className="space-y-8">
+              <div>
+                <h1 className="text-4xl lg:text-5xl font-display font-bold leading-tight">
+                  <span className="text-primary">Financial services</span>{" "}
+                  <span className="text-foreground">
+                    for your business & life
+                  </span>
                 </h1>
-                <p className="text-muted-foreground">
-                    Explore our comprehensive financial services designed to help your business grow.
-                </p>
+              </div>
+              <ServiceGrid onServiceClick={handleServiceClick} />
             </div>
+
+            {/* Right Column - Hero Images */}
+            <div className="hidden lg:block">
+              <HeroImages />
+            </div>
+          </div>
         </div>
-    );
+      </section>
+
+      {/* Spotlight Section */}
+      <SpotlightSection />
+
+      {/* Service Modal */}
+      <ServiceModal
+        isOpen={isServiceModalOpen}
+        onClose={handleCloseServiceModal}
+        serviceId={selectedService}
+        onSubServiceClick={handleSubServiceClick}
+      />
+
+      {/* Slot Booking Modal */}
+      <SlotBookingModal
+        isOpen={isSlotModalOpen}
+        onClose={handleCloseSlotModal}
+        subServiceId={selectedSubService}
+      />
+    </>
+  );
 }

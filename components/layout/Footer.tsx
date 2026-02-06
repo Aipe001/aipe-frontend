@@ -1,9 +1,9 @@
 import Link from "next/link";
 
 const footerLinks = [
-  { name: "Home", path: "/" },
+  // { name: "Home", path: "/" },
   { name: "Services", path: "/services" },
-  { name: "Experts", path: "/experts" },
+  // { name: "Experts", path: "/experts" },
   { name: "About", path: "/about" },
   { name: "Bookings", path: "/bookings" },
 ];

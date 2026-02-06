@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 const navLinks = [
   { name: "Home", path: "/" },
   { name: "Services", path: "/services" },
-  { name: "Experts", path: "/experts" },
+  // { name: "Experts", path: "/experts" },
   { name: "About", path: "/about" },
   { name: "Bookings", path: "/bookings" },
 ];
@@ -31,10 +31,11 @@ export function Header() {
               <Link
                 key={link.path}
                 href={link.path}
-                className={`text-sm font-medium transition-colors hover:text-primary ${pathname === link.path
-                  ? "text-foreground border-b-2 border-primary pb-1"
-                  : "text-muted-foreground"
-                  }`}
+                className={`text-sm font-medium transition-colors hover:text-primary ${
+                  pathname === link.path
+                    ? "text-foreground border-b-2 border-primary pb-1"
+                    : "text-muted-foreground"
+                }`}
               >
                 {link.name}
               </Link>
