@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
 
@@ -11,8 +11,9 @@ const steps = [
     title: "SELECT SERVICE",
     description:
       "Choose from our wide range of financial and legal services like GST, ITR, or Company Registration.",
-    image: "/assets/aipeSplash.png", // Using splash as placeholder for app screen
-    color: "text-pink-500", // Snabbit uses pink accents
+    image: "/assets/aipeSplash.png",
+    color: "bg-[#D6EBFF] text-[#1C8AFF]", // Even more distinctive blue tint
+    badgeColor: "bg-[#1C8AFF]",
   },
   {
     id: 2,
@@ -21,7 +22,8 @@ const steps = [
     description:
       "A dedicated CA, CS, or Legal Expert is assigned to your tasks instantly.",
     image: "/assets/aipeSplash.png",
-    color: "text-blue-500",
+    color: "bg-[#E0F0FF] text-[#1C8AFF]", // Slightly darker blue tint
+    badgeColor: "bg-[#1C8AFF]",
   },
   {
     id: 3,
@@ -30,9 +32,79 @@ const steps = [
     description:
       "Track progress in real-time. Receive your filed documents and certificates directly on the app.",
     image: "/assets/aipeSplash.png",
-    color: "text-green-500",
+    color: "bg-[#F0F7FF] text-[#1C8AFF]", // Lightest Blue
+    badgeColor: "bg-[#1C8AFF]",
   },
 ];
+
+const Card = ({
+  step,
+  index,
+  scrollYProgress,
+}: {
+  step: (typeof steps)[0];
+  index: number;
+  scrollYProgress: MotionValue<number>;
+}) => {
+  // Animation Logic
+  // First card is static (already there) from the start.
+  // Subsequent cards (index > 0) slide up from bottom.
+  // Using 0.25 intervals for stagger.
+
+  const ySpring = useTransform(
+    scrollYProgress,
+    [index * 0.25, index * 0.25 + 0.25],
+    index === 0
+      ? ["0px", "0px"] // First card stays at 0 offset
+      : ["120%", `${index * 30}px`], // Others slide in to their offset
+  );
+
+  const opacitySpring = useTransform(
+    scrollYProgress,
+    [index * 0.25, index * 0.25 + 0.1],
+    index === 0 ? [1, 1] : [0, 1], // First card always visible
+  );
+
+  return (
+    <motion.div
+      style={{
+        y: ySpring,
+        opacity: opacitySpring,
+        zIndex: index + 1,
+      }}
+      className="absolute top-0 w-full max-w-3xl h-[400px] flex rounded-3xl shadow-2xl overflow-hidden border border-gray-100 bg-white"
+    >
+      {/* Visual Side */}
+      <div
+        className={`w-2/5 h-full ${step.color} flex items-center justify-center relative p-8`}
+      >
+        <div className="relative w-full h-full">
+          <Image
+            src={step.image}
+            alt={step.title}
+            fill
+            className="object-contain drop-shadow-xl"
+          />
+        </div>
+      </div>
+
+      {/* Content Side */}
+      <div className="w-3/5 h-full flex flex-col justify-center px-10 bg-white relative">
+        <span
+          className={`inline-block px-4 py-1.5 rounded-full text-xs font-bold tracking-widest text-white mb-6 w-fit ${step.badgeColor}`}
+        >
+          {step.step}
+        </span>
+        <h3 className="text-3xl font-bold text-foreground mb-4 font-display uppercase leading-tight">
+          {step.title}
+        </h3>
+        <p className="text-muted-foreground text-base leading-relaxed font-medium">
+          {step.description}
+        </p>
+      </div>
+    </motion.div>
+  );
+};
 
 export function HowItWorksSection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -41,89 +113,33 @@ export function HowItWorksSection() {
     offset: ["start start", "end end"],
   });
 
-  // Map scroll progress to active step index (0 to 2)
-  // 0-0.33 -> Step 1
-  // 0.33-0.66 -> Step 2
-  // 0.66-1.0 -> Step 3
-
   return (
-    <section className="bg-white">
-      <div className="py-12 md:py-20 text-center">
-        <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground">
-          HOW <span className="text-primary">AIPE</span> WORKS?
-        </h2>
-      </div>
+    <section className="bg-gray-50/50">
+      {/* Height defines scroll distance. 3 cards * decent scroll/card = ~500vh */}
+      <div ref={containerRef} className="relative h-[500vh]">
+        <div className="sticky top-0 h-screen flex flex-col items-center justify-start overflow-hidden pt-20 md:pt-32">
+          <div className="mb-8 md:mb-12 text-center">
+            <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground">
+              HOW{" "}
+              <span className="brand-text text-5xl font-bold tracking-tight text-primary">
+                aipe
+              </span>{" "}
+              WORKS?
+            </h2>
+          </div>
 
-      <div ref={containerRef} className="relative h-[300vh] bg-white">
-        <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
-          {/* Main Card */}
-          <div className="relative w-full max-w-5xl h-[500px] md:h-[600px] bg-white rounded-3xl shadow-2xl flex overflow-hidden border border-gray-100">
-            {/* Left: Phone Visual (Sticky inside card or changing) */}
-            <div className="w-1/2 h-full bg-gray-50 flex items-center justify-center relative overflow-hidden">
-              <div className="relative w-[250px] md:w-[300px] h-[500px] md:h-[600px]">
-                {/* Here we could animate the image or slide it if we had different screens */}
-                <Image
-                  src="/assets/aipeSplash.png"
-                  alt="App Screen"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-            </div>
-
-            {/* Right: Steps Content */}
-            <div className="w-1/2 h-full flex flex-col justify-center px-8 md:px-16 relative">
-              {steps.map((step, index) => {
-                // Logic to show/hide based on scroll
-                // We can use opacity transforms
-                const startRange = index * 0.33;
-                const endRange = (index + 1) * 0.33;
-
-                const opacity = useTransform(
-                  scrollYProgress,
-                  [startRange, startRange + 0.1, endRange - 0.1, endRange],
-                  [0, 1, 1, 0],
-                );
-
-                // For the last item, keep it visible at end until section scrolls away
-                const finalOpacity =
-                  index === steps.length - 1
-                    ? useTransform(
-                        scrollYProgress,
-                        [startRange, startRange + 0.1],
-                        [0, 1],
-                      )
-                    : opacity;
-
-                return (
-                  <motion.div
-                    key={step.id}
-                    style={{
-                      opacity:
-                        index === steps.length - 1 ? finalOpacity : opacity,
-                    }}
-                    className="absolute inset-0 flex flex-col justify-center px-8 md:px-16 pointer-events-none"
-                  >
-                    <span
-                      className={`inline-block px-4 py-1 rounded-full text-xs font-bold tracking-widest text-white bg-primary mb-6 w-fit`}
-                    >
-                      {step.step}
-                    </span>
-                    <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-display uppercase">
-                      {step.title}
-                    </h3>
-                    <p className="text-muted-foreground text-lg leading-relaxed">
-                      {step.description}
-                    </p>
-                  </motion.div>
-                );
-              })}
-            </div>
+          <div className="relative w-full max-w-3xl h-[450px] flex items-center justify-center">
+            {steps.map((step, index) => (
+              <Card
+                key={step.id}
+                step={step}
+                index={index}
+                scrollYProgress={scrollYProgress}
+              />
+            ))}
           </div>
         </div>
       </div>
-
-      {/* Explicit spacer to allow scrolling "past" the pinned section typically handled by the height of containerRef */}
     </section>
   );
 }
