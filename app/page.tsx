@@ -41,11 +41,85 @@ export default function Home() {
                 From GST registration to ITR filing, we handle everything so you
                 can focus on your business.
               </p>
-              <div className="flex justify-center gap-8 opacity-50 grayscale">
-                {/* Placeholders for logos */}
-                <div className="h-8 w-24 bg-foreground/20 rounded"></div>
-                <div className="h-8 w-24 bg-foreground/20 rounded"></div>
-                <div className="h-8 w-24 bg-foreground/20 rounded"></div>
+              <div className="flex flex-wrap justify-center gap-8 md:gap-16 pt-4">
+                {/* Stat 1 */}
+                <div className="flex flex-col items-center gap-2">
+                  <div className="h-10 w-10 md:h-12 md:w-12 rounded-full bg-white/50 flex items-center justify-center text-[#1C8AFF]">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="w-5 h-5 md:w-6 md:h-6"
+                    >
+                      <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                      <polyline points="14 2 14 8 20 8" />
+                      <path d="M12 13v5" />
+                      <path d="M12 18l3-3" />
+                      <path d="M12 18l-3-3" />
+                    </svg>
+                  </div>
+                  <div>
+                    <div className="text-2xl md:text-3xl font-bold text-foreground">
+                      50k+
+                    </div>
+                    <div className="text-xs md:text-sm text-muted-foreground font-medium uppercase tracking-wider">
+                      Filings Done
+                    </div>
+                  </div>
+                </div>
+
+                {/* Stat 2 */}
+                <div className="flex flex-col items-center gap-2">
+                  <div className="h-10 w-10 md:h-12 md:w-12 rounded-full bg-white/50 flex items-center justify-center text-[#1C8AFF]">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="w-5 h-5 md:w-6 md:h-6"
+                    >
+                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                      <circle cx="9" cy="7" r="4" />
+                      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>
+                  </div>
+                  <div>
+                    <div className="text-2xl md:text-3xl font-bold text-foreground">
+                      500+
+                    </div>
+                    <div className="text-xs md:text-sm text-muted-foreground font-medium uppercase tracking-wider">
+                      Verified Experts
+                    </div>
+                  </div>
+                </div>
+
+                {/* Stat 3 */}
+                <div className="flex flex-col items-center gap-2">
+                  <div className="h-10 w-10 md:h-12 md:w-12 rounded-full bg-white/50 flex items-center justify-center text-[#1C8AFF]">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      stroke="none"
+                      className="w-5 h-5 md:w-6 md:h-6 text-yellow-400"
+                    >
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                    </svg>
+                  </div>
+                  <div>
+                    <div className="text-2xl md:text-3xl font-bold text-foreground">
+                      4.9/5
+                    </div>
+                    <div className="text-xs md:text-sm text-muted-foreground font-medium uppercase tracking-wider">
+                      Customer Rating
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
