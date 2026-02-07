@@ -69,8 +69,12 @@ export function SpotlightSection() {
               className={`flex-none w-[85vw] md:w-[350px] lg:w-[400px] h-40 md:h-48 rounded-2xl p-6 flex flex-col justify-between shadow-lg snap-center ${item.bgClass} relative overflow-hidden`}
             >
               <div className="relative z-10 z-0">
-                <h3 className="font-bold text-xl md:text-2xl mb-1">{item.title}</h3>
-                <p className="text-white/90 text-sm md:text-base font-medium">{item.subtitle}</p>
+                <h3 className="font-bold text-xl md:text-2xl mb-1">
+                  {item.title}
+                </h3>
+                <p className="text-white/90 text-sm md:text-base font-medium">
+                  {item.subtitle}
+                </p>
               </div>
               <Button
                 variant="secondary"

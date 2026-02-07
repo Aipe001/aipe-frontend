@@ -21,7 +21,6 @@ export default function Home() {
       <ScrollPhoneLayout />
 
       <div className="space-y-2 md:space-y-8 pb-24 md:pb-12 bg-background md:bg-transparent">
-
         {/* Services Grid - The Core Snabbit Feature */}
         <ServiceGrid onServiceClick={handleServiceClick} />
 
@@ -35,9 +34,12 @@ export default function Home() {
         <section className="py-8 md:py-12">
           <div className="page-container">
             <div className="bg-primary/5 rounded-2xl p-6 md:p-12 text-center">
-              <h3 className="text-xl md:text-3xl font-bold text-primary mb-3">Trusted by 6,000+ Businesses</h3>
+              <h3 className="text-xl md:text-3xl font-bold text-primary mb-3">
+                Trusted by 6,000+ Businesses
+              </h3>
               <p className="text-muted-foreground max-w-xl mx-auto mb-6">
-                From GST registration to ITR filing, we handle everything so you can focus on your business.
+                From GST registration to ITR filing, we handle everything so you
+                can focus on your business.
               </p>
               <div className="flex justify-center gap-8 opacity-50 grayscale">
                 {/* Placeholders for logos */}
@@ -48,7 +50,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
       </div>
     </main>
   );

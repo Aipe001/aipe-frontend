@@ -22,12 +22,16 @@ export function Header() {
           {/* Logo & Location (Left) */}
           <div className="flex items-center gap-4 md:gap-8">
             <Link href="/" className="flex items-center gap-2">
-              <span className="brand-text text-2xl font-bold tracking-tight text-primary">aipe</span>
+              <span className="brand-text text-2xl font-bold tracking-tight text-primary">
+                aipe
+              </span>
             </Link>
 
             <div className="hidden md:flex items-center gap-1.5 text-sm text-foreground/80 hover:text-primary cursor-pointer transition-colors bg-muted/50 px-3 py-1.5 rounded-full">
               <MapPin className="w-4 h-4 text-primary" />
-              <span className="font-medium truncate max-w-[150px]">New Delhi, India</span>
+              <span className="font-medium truncate max-w-[150px]">
+                New Delhi, India
+              </span>
               <span className="text-xs text-muted-foreground">▼</span>
             </div>
           </div>
@@ -38,8 +42,11 @@ export function Header() {
               <Link
                 key={link.path}
                 href={link.path}
-                className={`text-sm font-medium transition-colors hover:text-primary ${pathname === link.path ? "text-primary" : "text-muted-foreground"
-                  }`}
+                className={`text-sm font-medium transition-colors hover:text-primary ${
+                  pathname === link.path
+                    ? "text-primary"
+                    : "text-muted-foreground"
+                }`}
               >
                 {link.name}
               </Link>
@@ -59,12 +66,20 @@ export function Header() {
               />
             </div>
 
-            <Button variant="ghost" size="icon" className="relative text-muted-foreground hover:text-primary">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="relative text-muted-foreground hover:text-primary"
+            >
               <Bell className="w-5 h-5" />
               <span className="absolute top-2 right-2 w-2 h-2 bg-destructive rounded-full border-2 border-background" />
             </Button>
 
-            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-muted-foreground hover:text-primary"
+            >
               <User className="w-5 h-5" />
             </Button>
           </div>

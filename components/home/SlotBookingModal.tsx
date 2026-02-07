@@ -1,10 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -18,7 +27,11 @@ interface SlotBookingModalProps {
 
 const timeSlots = ["10:00 AM", "12:00 PM", "2:00 PM", "4:00 PM"];
 
-export function SlotBookingModal({ isOpen, onClose, subServiceId }: SlotBookingModalProps) {
+export function SlotBookingModal({
+  isOpen,
+  onClose,
+  subServiceId,
+}: SlotBookingModalProps) {
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
   const router = useRouter();
@@ -29,7 +42,7 @@ export function SlotBookingModal({ isOpen, onClose, subServiceId }: SlotBookingM
       const params = new URLSearchParams({
         date: format(date, "PPP"),
         slot: selectedSlot,
-        serviceId: subServiceId || ""
+        serviceId: subServiceId || "",
       });
       router.push(`/checkout?${params.toString()}`);
     }
@@ -51,7 +64,7 @@ export function SlotBookingModal({ isOpen, onClose, subServiceId }: SlotBookingM
                 variant="outline"
                 className={cn(
                   "w-full justify-start text-left font-normal",
-                  !date && "text-muted-foreground"
+                  !date && "text-muted-foreground",
                 )}
               >
                 <CalendarIcon className="mr-2 h-4 w-4" />

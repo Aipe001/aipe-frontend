@@ -1,6 +1,11 @@
 "use client";
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { ChevronRight, FileText } from "lucide-react";
 
 interface ServiceModalProps {
@@ -10,7 +15,10 @@ interface ServiceModalProps {
   onSubServiceClick: (subServiceId: string) => void;
 }
 
-const serviceData: Record<string, { title: string; subServices: { id: string; name: string }[] }> = {
+const serviceData: Record<
+  string,
+  { title: string; subServices: { id: string; name: string }[] }
+> = {
   gst: {
     title: "GST Registration Services",
     subServices: [
@@ -68,7 +76,12 @@ const serviceData: Record<string, { title: string; subServices: { id: string; na
   },
 };
 
-export function ServiceModal({ isOpen, onClose, serviceId, onSubServiceClick }: ServiceModalProps) {
+export function ServiceModal({
+  isOpen,
+  onClose,
+  serviceId,
+  onSubServiceClick,
+}: ServiceModalProps) {
   const service = serviceId ? serviceData[serviceId] : null;
 
   if (!service) return null;
@@ -90,7 +103,9 @@ export function ServiceModal({ isOpen, onClose, serviceId, onSubServiceClick }: 
             >
               <div className="flex items-center gap-3">
                 <FileText className="w-5 h-5 text-muted-foreground" />
-                <span className="font-medium text-foreground">{subService.name}</span>
+                <span className="font-medium text-foreground">
+                  {subService.name}
+                </span>
               </div>
               <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
             </button>

@@ -20,7 +20,7 @@ export const NavLink = ({ to, children, className }: NavLinkProps) => {
       className={cn(
         "relative px-4 py-2 text-sm font-medium transition-colors hover:text-primary",
         isActive ? "text-primary" : "text-gray-600",
-        className
+        className,
       )}
     >
       {children}
