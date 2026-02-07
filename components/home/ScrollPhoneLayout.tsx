@@ -22,13 +22,17 @@ export function ScrollPhoneLayout() {
   const scale = useTransform(scrollYProgress, [0, 1, 1], [1, 0.6, 1]); // Slight zoom during transition
   const opacity = useTransform(scrollYProgress, [0, 0.8, 1], [1, 1, 0]); // Fade out at very end if needed
 
+  // Controls vertical position:
+  // Starts at 500px down (very low) and moves/scrolls UP to -250px (significantly higher than center)
+  const y = useTransform(scrollYProgress, [0, 1], [200, -250]);
+
   return (
     <div ref={containerRef} className="relative bg-background">
       {/* Sticky Phone Container */}
       {/* It needs to be z-20 to sit above backgrounds but maybe below some text if needed */}
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden z-20 pointer-events-none">
         <motion.div
-          style={{ scale, opacity }}
+          style={{ scale, opacity, y }}
           className="relative w-[280px] md:w-[340px] lg:w-[500px]"
         >
           <div className="absolute inset-0 bg-primary/20 blur-3xl rounded-full opacity-50 -z-10"></div>

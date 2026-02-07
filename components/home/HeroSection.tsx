@@ -36,13 +36,13 @@ export function HeroSection({ hidePhone = false }: HeroSectionProps) {
 
           {/* App Store Buttons Placeholder */}
           <div className="flex gap-4 justify-center pt-4">
-            <Button className="bg-black text-white hover:bg-black/90 h-12 px-6 rounded-lg gap-2">
+            <Button className="bg-black text-white hover:bg-[#333333] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 h-auto py-3 px-6 rounded-lg gap-3 shadow-lg hover:shadow-xl cursor-pointer">
               <span className="text-xs text-left leading-tight">
-                GET IT ON <br />{" "}
+                Get It On <br />{" "}
                 <span className="text-base font-bold">Google Play</span>
               </span>
             </Button>
-            <Button className="bg-black text-white hover:bg-black/90 h-12 px-6 rounded-lg gap-2">
+            <Button className="bg-black text-white hover:bg-[#333333] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 h-auto py-3 px-6 rounded-lg gap-3 shadow-lg hover:shadow-xl cursor-pointer">
               <span className="text-xs text-left leading-tight">
                 Download on the <br />{" "}
                 <span className="text-base font-bold">App Store</span>
