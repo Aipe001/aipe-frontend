@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { StoreButtons } from "@/components/ui/store-buttons";
 
 const footerLinks = [
   // { name: "Home", path: "/" },
@@ -24,6 +25,9 @@ export function Footer() {
             </Link>
           ))}
         </nav>
+
+        {/* App Store Buttons */}
+        <StoreButtons className="mb-8" />
 
         {/* Bottom Section */}
         <div className="flex flex-col sm:flex-row items-center justify-between pt-6 border-t border-footer-foreground/20 gap-4">

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import { StoreButtons } from "@/components/ui/store-buttons";
 
 interface HeroSectionProps {
   hidePhone?: boolean;
@@ -34,21 +34,8 @@ export function HeroSection({ hidePhone = false }: HeroSectionProps) {
             On-demand financial & legal services to empower urban businesses.
           </p>
 
-          {/* App Store Buttons Placeholder */}
-          <div className="flex gap-4 justify-center pt-4">
-            <Button className="bg-black text-white hover:bg-[#333333] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 h-auto py-3 px-6 rounded-lg gap-3 shadow-lg hover:shadow-xl cursor-pointer">
-              <span className="text-xs text-left leading-tight">
-                Get It On <br />{" "}
-                <span className="text-base font-bold">Google Play</span>
-              </span>
-            </Button>
-            <Button className="bg-black text-white hover:bg-[#333333] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 h-auto py-3 px-6 rounded-lg gap-3 shadow-lg hover:shadow-xl cursor-pointer">
-              <span className="text-xs text-left leading-tight">
-                Download on the <br />{" "}
-                <span className="text-base font-bold">App Store</span>
-              </span>
-            </Button>
-          </div>
+          {/* App Store Buttons */}
+          <StoreButtons className="pt-4" />
         </div>
 
         {/* Hero Images Layout */}
