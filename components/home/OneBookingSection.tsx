@@ -1,14 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const tasks = [
-  { title: "GST Filing", img: "/placeholder.svg" },
-  { title: "ITR Filing", img: "/placeholder.svg" },
-  { title: "Trademark", img: "/placeholder.svg" },
-  { title: "Company Reg", img: "/placeholder.svg" },
-  { title: "Loan Assist", img: "/placeholder.svg" },
-  { title: "Legal Docs", img: "/placeholder.svg" },
+  { title: "GST Filing", img: "/assets/gst_filing.png" },
+  { title: "ITR Filing", img: "/assets/itr_filing.png" },
+  { title: "Trademark", img: "/assets/trademark.png" },
+  { title: "Company Reg", img: "/assets/company_reg.png" },
+  { title: "Loan Assist", img: "/assets/loan_assist.png" },
+  { title: "Legal Docs", img: "/assets/legal_docs.png" },
 ];
 
 export function OneBookingSection() {
@@ -62,14 +63,16 @@ export function OneBookingSection() {
             {[...tasks, ...tasks, ...tasks, ...tasks].map((item, i) => (
               <div
                 key={i}
-                className="w-48 h-60 bg-white rounded-3xl p-4 flex flex-col gap-4 shadow-xl shrink-0 transition-transform duration-300"
+                className="w-48 h-60 bg-white rounded-3xl p-4 pb-8 flex flex-col gap-4 shadow-xl shrink-0 transition-transform duration-300"
               >
-                <div className="flex-1 bg-secondary rounded-2xl overflow-hidden flex items-center justify-center">
-                  <span className="text-4xl">📄</span>
+                <div className="flex-1 bg-secondary rounded-2xl overflow-hidden flex items-center justify-center relative">
+                  <Image
+                    src={item.img}
+                    alt={item.title}
+                    fill
+                    className="object-cover"
+                  />
                 </div>
-                <p className="text-center font-bold text-foreground text-sm">
-                  {item.title}
-                </p>
               </div>
             ))}
           </div>
