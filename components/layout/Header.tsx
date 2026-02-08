@@ -101,9 +101,13 @@ export function Header() {
           {/* Logo & Location (Left) */}
           <div className="flex items-center gap-4 md:gap-8">
             <Link href="/" className="flex items-center gap-2">
-              <span className="brand-text text-2xl font-bold tracking-tight text-primary">
-                aipe
-              </span>
+              <img
+                src="/assets/aipe_logo1.png"
+                alt="Aipe Logo"
+                className="h-10 w-auto object-contain"
+                width={120}
+                height={40}
+              />
             </Link>
 
             <DropdownMenu>

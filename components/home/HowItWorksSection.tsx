@@ -119,10 +119,15 @@ export function HowItWorksSection() {
       <div ref={containerRef} className="relative h-[500vh]">
         <div className="sticky top-0 h-screen flex flex-col items-center justify-start overflow-hidden pt-20 md:pt-32">
           <div className="mb-8 md:mb-12 text-center">
-            <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground">
+            <h2 className="text-3xl md:text-5xl font-display font-bold text-[#1C8AFF] flex items-center justify-center gap-3">
               HOW{" "}
-              <span className="brand-text text-5xl font-bold tracking-tight text-primary">
-                aipe
+              <span className="relative h-16 w-24 inline-block">
+                <Image
+                  src="/assets/aipe_logo3.png"
+                  alt="aipe"
+                  fill
+                  className="object-contain"
+                />
               </span>{" "}
               WORKS?
             </h2>

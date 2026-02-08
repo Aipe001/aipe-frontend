@@ -83,7 +83,7 @@ export function HeroSection({ hidePhone = false }: HeroSectionProps) {
       </div>
 
       {/* Decorative Floor/Background */}
-      <div className="absolute bottom-0 w-full h-16 md:h-24 bg-[#4a0e4e]"></div>
+      <div className="absolute bottom-0 w-full h-16 md:h-24"></div>
       {/* Note: Using a dark purple similar to Snabbit's floor, or could use primary color */}
     </section>
   );
