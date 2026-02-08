@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { StoreButtons } from "@/components/ui/store-buttons";
 
 const footerLinks = [
@@ -45,12 +46,10 @@ export function Footer() {
               Made with <span className="text-[#1C8AFF]">💙</span> in India
             </p>
             <div className="flex items-center gap-0 md:flex-1 md:justify-end">
-              <img
+              <Image
                 src="/assets/aipe_logo2.png"
                 alt="Aipe Logo"
-                className="h-12 w-auto object-contain" // Keep some size, maybe slightly smaller than the header one? Or match user request "put this image" (the one from before was h-16, maybe too big here? let's try h-8 first as it's beside text)
-                // User said "put this image beside copyright". The previous image was h-16. That's huge for a copyright line. Let's try h-8 (32px) first.
-                // Wait, user might want the full logo there. Let's do h-8.
+                className="h-12 w-auto object-contain"
                 width={100}
                 height={32}
               />

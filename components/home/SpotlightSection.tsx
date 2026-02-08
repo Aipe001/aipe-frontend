@@ -2,7 +2,6 @@
 
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { ChevronRight } from "lucide-react";
 
 interface SpotlightItem {
   id: number;
