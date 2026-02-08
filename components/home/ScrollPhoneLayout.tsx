@@ -24,7 +24,7 @@ export function ScrollPhoneLayout() {
 
   // Controls vertical position:
   // Starts at 500px down (very low) and moves/scrolls UP to -250px (significantly higher than center)
-  const y = useTransform(scrollYProgress, [0, 1], [200, -250]);
+  const y = useTransform(scrollYProgress, [0, 1], [265, -300]);
 
   return (
     <div ref={containerRef} className="relative bg-background">

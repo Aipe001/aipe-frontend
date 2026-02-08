@@ -7,6 +7,7 @@ const footerLinks = [
   // { name: "Experts", path: "/experts" },
   { name: "About", path: "/about" },
   { name: "Bookings", path: "/bookings" },
+  { name: "FAQs", path: "/#faq" },
 ];
 
 export function Footer() {
@@ -30,9 +31,21 @@ export function Footer() {
         <StoreButtons className="mb-8" />
 
         {/* Bottom Section */}
-        <div className="flex flex-col sm:flex-row items-center justify-between pt-6 border-t border-footer-foreground/20 gap-4">
-          <p className="text-sm opacity-80">Financial Services More</p>
-          <p className="text-sm opacity-80">Copyright © 2025 aipe content</p>
+        <div className="flex flex-col items-center gap-6 pt-6 border-t border-footer-foreground/20">
+          <a
+            href="mailto:hello@aipe.club"
+            className="text-base font-medium hover:text-[#1C8AFF] transition-colors"
+          >
+            hello@aipe.club
+          </a>
+
+          <div className="flex flex-col sm:flex-row w-full items-center justify-between gap-4 text-sm opacity-80">
+            <p>Financial Services More</p>
+            <p className="font-medium text-center">
+              Made with <span className="text-[#1C8AFF]">💙</span> in India
+            </p>
+            <p>Copyright © 2025 AIPE</p>
+          </div>
         </div>
       </div>
     </footer>

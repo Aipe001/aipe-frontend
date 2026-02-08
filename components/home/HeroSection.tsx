@@ -25,17 +25,17 @@ export function HeroSection({ hidePhone = false }: HeroSectionProps) {
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-display font-extrabold tracking-tight text-foreground uppercase leading-tight">
             INDIA&apos;S FIRST <br />
             <span className="text-primary relative inline-block">
-              QUICK SERVICE
+              QUICK FINANCE SERVICE
               <span className="absolute bottom-1 left-0 w-full h-3 bg-primary/20 -z-10 skew-x-12 transform"></span>
             </span>{" "}
             APP
           </h1>
-          <p className="text-muted-foreground text-sm md:text-lg max-w-lg mx-auto font-medium pt-2">
+          <p className="text-muted-foreground text-sm md:text-lg max-w-lg mx-auto font-medium pt-1">
             On-demand financial & legal services to empower urban businesses.
           </p>
 
           {/* App Store Buttons */}
-          <StoreButtons className="pt-4" />
+          <StoreButtons className="pt-1" />
         </div>
 
         {/* Hero Images Layout */}

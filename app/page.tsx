@@ -4,6 +4,7 @@ import { ScrollPhoneLayout } from "@/components/home/ScrollPhoneLayout";
 import { ServiceGrid } from "@/components/home/ServiceGrid";
 import { SpotlightSection } from "@/components/home/SpotlightSection";
 import { HowItWorksSection } from "@/components/home/HowItWorksSection";
+import { FAQSection } from "@/components/home/FAQSection";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
@@ -124,6 +125,9 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* FAQ Section */}
+        <FAQSection />
       </div>
     </main>
   );
