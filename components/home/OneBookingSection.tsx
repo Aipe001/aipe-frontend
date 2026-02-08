@@ -11,27 +11,42 @@ const tasks = [
   { title: "Legal Docs", img: "/placeholder.svg" },
 ];
 
-// Duplicate for infinite scroll
-const carouselItems = [...tasks, ...tasks, ...tasks];
-
 export function OneBookingSection() {
   return (
-    <section className="relative w-full min-h-screen bg-primary flex flex-col items-center justify-center overflow-hidden py-20">
+    <section className="relative w-full min-h-screen bg-primary flex flex-col items-center justify-start overflow-hidden py-20">
+      {/* CSS for infinite scroll and pause on hover */}
+      <style jsx>{`
+        @keyframes scroll {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+        .animate-scroll {
+          animation: scroll 30s linear infinite;
+        }
+        .animate-scroll:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
+
       {/* Title */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="text-center z-10 mb-12"
+        className="text-center z-10 mt-0 mb-32 relative"
       >
-        <h2 className="text-4xl md:text-6xl font-display font-bold text-white uppercase italic tracking-wider leading-none">
+        <h2 className="text-4xl md:text-6xl font-display font-bold text-white uppercase italic tracking-wider leading-none drop-shadow-lg">
           ONE BOOKING, <span className="text-white/80">MANY</span> <br />
-          <span className="text-primary-foreground">TASKS</span>
+          <span className="text-white">TASKS</span>
         </h2>
       </motion.div>
 
       {/* Carousel Container */}
-      <div className="absolute top-1/2 left-0 w-full -translate-y-1/2 z-0">
+      <div className="absolute top-[60%] left-0 w-full -translate-y-1/2 z-0">
         <div
           className="w-full overflow-hidden relative"
           style={{
@@ -41,16 +56,13 @@ export function OneBookingSection() {
               "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
           }}
         >
-          {/* Moving Row */}
-          <motion.div
-            className="flex gap-8 w-max"
-            animate={{ x: [0, -1000] }}
-            transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
-          >
-            {carouselItems.map((item, i) => (
+          {/* Moving Row with Pause on Hover */}
+          <div className="flex gap-8 w-max animate-scroll">
+            {/* Render items twice for seamless loop */}
+            {[...tasks, ...tasks, ...tasks, ...tasks].map((item, i) => (
               <div
                 key={i}
-                className="w-48 h-60 bg-white rounded-3xl p-4 flex flex-col gap-4 shadow-xl shrink-0"
+                className="w-48 h-60 bg-white rounded-3xl p-4 flex flex-col gap-4 shadow-xl shrink-0 transition-transform duration-300"
               >
                 <div className="flex-1 bg-secondary rounded-2xl overflow-hidden flex items-center justify-center">
                   <span className="text-4xl">📄</span>
@@ -60,7 +72,7 @@ export function OneBookingSection() {
                 </p>
               </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
 
