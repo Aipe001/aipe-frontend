@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import {
   Search,
@@ -101,12 +102,14 @@ export function Header() {
           {/* Logo & Location (Left) */}
           <div className="flex items-center gap-4 md:gap-8">
             <Link href="/" className="flex items-center gap-2">
-              <img
+              <Image
                 src="/assets/aipe_logo1.png"
                 alt="Aipe Logo"
-                className="h-10 w-auto object-contain"
                 width={120}
                 height={40}
+                className="object-contain"
+                priority
+                unoptimized
               />
             </Link>
 
