@@ -34,7 +34,7 @@ const navLinks = [
 export function Header() {
   const pathname = usePathname();
   const router = useRouter();
-  const [location, setLocation] = useState("New Delhi, India");
+  const [location, setLocation] = useState("New Delhi");
   const [isSignedIn, setIsSignedIn] = useState(true);
 
   // Notification State
@@ -87,13 +87,7 @@ export function Header() {
     setNotifications([]);
   };
 
-  const cities = [
-    "New Delhi, India",
-    "Mumbai, India",
-    "Kolkata, India",
-    "Chennai, India",
-    "Gandhinagar, India",
-  ];
+  const cities = ["New Delhi", "Mumbai", "Kolkata", "Chennai", "Gandhinagar"];
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -118,7 +112,7 @@ export function Header() {
                 <div className="hidden md:flex items-center gap-1.5 text-sm text-foreground/80 hover:text-primary cursor-pointer transition-colors bg-muted/50 px-3 py-1.5 rounded-full ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                   <MapPin className="w-4 h-4 text-primary" />
                   <span className="font-medium truncate max-w-[150px]">
-                    {location}
+                    {location}, India
                   </span>
                   <span className="text-xs text-muted-foreground">▼</span>
                 </div>
@@ -128,7 +122,7 @@ export function Header() {
                   <DropdownMenuItem
                     key={city}
                     onClick={() => setLocation(city)}
-                    className="cursor-pointer"
+                    className={`cursor-pointer ${location === city ? "bg-primary/10 text-primary font-medium" : ""}`}
                   >
                     {city}
                   </DropdownMenuItem>

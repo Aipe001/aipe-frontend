@@ -14,7 +14,7 @@ const tasks = [
 
 export function OneBookingSection() {
   return (
-    <section className="relative w-full min-h-screen bg-primary flex flex-col items-center justify-start overflow-hidden py-20">
+    <section className="relative w-full min-h-screen bg-[#1C8AFF] flex flex-col items-center justify-start overflow-hidden py-20">
       {/* CSS for infinite scroll and pause on hover */}
       <style jsx>{`
         @keyframes scroll {
