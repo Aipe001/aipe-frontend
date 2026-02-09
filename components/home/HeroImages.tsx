@@ -1,7 +1,7 @@
-const hero1 = "/assets/hero-1.jpg";
-const hero2 = "/assets/hero-2.jpg";
-const hero3 = "/assets/hero-3.jpg";
-const hero4 = "/assets/hero-4.jpg";
+const hero1 = "/assets/hero-1.png";
+const hero2 = "/assets/hero-2.png";
+const hero3 = "/assets/hero-3.png";
+const hero4 = "/assets/hero-4.png";
 
 import Image from "next/image";
 

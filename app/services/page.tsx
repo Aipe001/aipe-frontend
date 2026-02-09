@@ -4,6 +4,7 @@ import { useState } from "react";
 import { HeroImages } from "@/components/home/HeroImages";
 import { ServiceGrid } from "@/components/home/ServiceGrid";
 import { SpotlightSection } from "@/components/home/SpotlightSection";
+import { KeyFeaturesSection } from "@/components/home/KeyFeaturesSection";
 import { ServiceModal } from "@/components/home/ServiceModal";
 import { SlotBookingModal } from "@/components/home/SlotBookingModal";
 
@@ -46,13 +47,16 @@ export default function Home() {
             <div className="space-y-8">
               <div>
                 <h1 className="text-4xl lg:text-5xl font-display font-bold leading-tight">
-                  <span className="text-primary">Financial services</span>{" "}
+                  <span className="text-[#1C8AFF]">Financial services</span>{" "}
                   <span className="text-foreground">
                     for your business & life
                   </span>
                 </h1>
               </div>
-              <ServiceGrid onServiceClick={handleServiceClick} />
+              <ServiceGrid
+                onServiceClick={handleServiceClick}
+                hasContainer={false}
+              />
             </div>
 
             {/* Right Column - Hero Images */}
@@ -65,6 +69,9 @@ export default function Home() {
 
       {/* Spotlight Section */}
       <SpotlightSection />
+
+      {/* Key Features Section */}
+      <KeyFeaturesSection />
 
       {/* Service Modal */}
       <ServiceModal

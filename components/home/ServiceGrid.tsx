@@ -64,40 +64,52 @@ const services = [
 
 interface ServiceGridProps {
   onServiceClick: (serviceId: string) => void;
+  hasContainer?: boolean;
 }
 
-export function ServiceGrid({ onServiceClick }: ServiceGridProps) {
-  return (
-    <section className="py-2 md:py-8">
-      <div className="page-container">
-        <div className="flex items-center justify-between mb-4 px-1">
-          <h2 className="text-lg md:text-2xl font-bold text-foreground">
-            Our Services
-          </h2>
-          <button className="text-primary text-sm font-medium hover:underline">
-            View All
-          </button>
-        </div>
-
-        <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-x-4 gap-y-6">
-          {services.map((service) => (
-            <button
-              key={service.id}
-              onClick={() => onServiceClick(service.id)}
-              className="flex flex-col items-center gap-2 group"
-            >
-              <div
-                className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl md:rounded-3xl ${service.color} flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform duration-200`}
-              >
-                <service.icon className="w-6 h-6 md:w-8 md:h-8" />
-              </div>
-              <span className="text-xs md:text-sm text-center font-medium text-foreground/80 leading-tight">
-                {service.name}
-              </span>
-            </button>
-          ))}
-        </div>
+export function ServiceGrid({
+  onServiceClick,
+  hasContainer = true,
+}: ServiceGridProps) {
+  const content = (
+    <>
+      <div className="flex items-center justify-between mb-4 px-1">
+        <h2 className="text-lg md:text-2xl font-bold text-foreground">
+          Our Services
+        </h2>
+        <button className="text-[#1C8AFF] text-sm font-medium hover:underline">
+          View All
+        </button>
       </div>
-    </section>
+
+      <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-x-4 gap-y-6">
+        {services.map((service) => (
+          <button
+            key={service.id}
+            onClick={() => onServiceClick(service.id)}
+            className="flex flex-col items-center gap-2 group"
+          >
+            <div
+              className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl md:rounded-3xl ${service.color} flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform duration-200`}
+            >
+              <service.icon className="w-6 h-6 md:w-8 md:h-8" />
+            </div>
+            <span className="text-xs md:text-sm text-center font-medium text-foreground/80 leading-tight">
+              {service.name}
+            </span>
+          </button>
+        ))}
+      </div>
+    </>
   );
+
+  if (hasContainer) {
+    return (
+      <section className="py-2 md:py-8">
+        <div className="page-container">{content}</div>
+      </section>
+    );
+  }
+
+  return <div className="py-2 md:py-8">{content}</div>;
 }
