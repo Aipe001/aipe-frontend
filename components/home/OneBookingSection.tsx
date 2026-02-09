@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 const tasks = [
   { title: "GST Filing", img: "/assets/gst_filing.png" },
@@ -12,6 +13,33 @@ const tasks = [
 ];
 
 export function OneBookingSection() {
+  const [isFixed, setIsFixed] = useState(false);
+  const buttonSentinelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (buttonSentinelRef.current) {
+        const rect = buttonSentinelRef.current.getBoundingClientRect();
+        // The button should be fixed if its original position (sentinel)
+        // has moved up past the bottom of the viewport
+        const triggerPoint = window.innerHeight - 32; // bottom-8 is 32px
+
+        // If the sentinel's bottom is ABOVE the trigger point, we fix the button
+        // to the viewport bottom.
+        // Wait, if we scroll down, rect.bottom decreases.
+        // When rect.bottom < window.innerHeight - 32, it means the natural position
+        // is higher up, so we should FIX it to stay at the bottom.
+        setIsFixed(rect.bottom < triggerPoint);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    // Initial check
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <section className="relative w-full min-h-screen bg-[#1C8AFF] flex flex-col items-center justify-start overflow-hidden py-20">
       {/* CSS for infinite scroll and pause on hover */}
@@ -78,11 +106,22 @@ export function OneBookingSection() {
         </div>
       </div>
 
-      {/* Contact Button */}
-      <div className="absolute bottom-8 right-8 z-20">
-        <button className="bg-white text-primary flex items-center gap-2 px-6 py-3 rounded-full font-bold shadow-lg hover:bg-gray-100 transition-colors">
-          <span className="text-lg">Write to us</span>
-        </button>
+      {/* Contact Button Container & Sentinel */}
+      <div
+        ref={buttonSentinelRef}
+        className="absolute bottom-8 right-8 z-20 w-[160px] h-[52px]" // Sentinel occupies space
+      >
+        <div
+          className={`${
+            isFixed
+              ? "fixed bottom-8 right-8 z-50 transition-none"
+              : "absolute bottom-0 right-0"
+          }`}
+        >
+          <button className="bg-white text-[#1C8AFF] flex items-center gap-2 px-6 py-3 rounded-full font-bold shadow-lg hover:bg-gray-100 transition-colors">
+            <span className="text-lg">Write to us</span>
+          </button>
+        </div>
       </div>
     </section>
   );
