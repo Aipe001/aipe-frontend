@@ -9,7 +9,6 @@ const tasks = [
   { title: "Trademark", img: "/assets/trademark.png" },
   { title: "Company Reg", img: "/assets/company_reg.png" },
   { title: "Loan Assist", img: "/assets/loan_assist.png" },
-  { title: "Legal Docs", img: "/assets/legal_docs.png" },
 ];
 
 export function OneBookingSection() {

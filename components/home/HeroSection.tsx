@@ -31,7 +31,7 @@ export function HeroSection({ hidePhone = false }: HeroSectionProps) {
             APP
           </h1>
           <p className="text-muted-foreground text-sm md:text-lg max-w-lg mx-auto font-medium pt-1">
-            On-demand financial & legal services to empower urban businesses.
+            On-demand financial services to empower your goals.
           </p>
 
           {/* App Store Buttons */}

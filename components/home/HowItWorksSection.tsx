@@ -10,29 +10,59 @@ const steps = [
     step: "STEP 1",
     title: "SELECT SERVICE",
     description:
-      "Choose from our wide range of financial and legal services like GST, ITR, or Company Registration.",
+      "Choose from our wide range of financial services like GST, ITR, or Company Registration.",
     image: "/assets/aipeSplash.png",
-    color: "bg-[#D6EBFF] text-[#1C8AFF]", // Even more distinctive blue tint
+    color: "bg-[#CCE5FF] text-[#1C8AFF]",
     badgeColor: "bg-[#1C8AFF]",
   },
   {
     id: 2,
     step: "STEP 2",
-    title: "EXPERT ASSIGNED",
+    title: "CHOOSE TIME SLOT",
     description:
-      "A dedicated CA, CS, or Legal Expert is assigned to your tasks instantly.",
+      "Select a convenient time for your consultation with our experts.",
     image: "/assets/aipeSplash.png",
-    color: "bg-[#E0F0FF] text-[#1C8AFF]", // Slightly darker blue tint
+    color: "bg-[#D4EAFF] text-[#1C8AFF]",
     badgeColor: "bg-[#1C8AFF]",
   },
   {
     id: 3,
     step: "STEP 3",
+    title: "PAYMENT",
+    description:
+      "Securely pay for your selected service using our multiple payment options.",
+    image: "/assets/aipeSplash.png",
+    color: "bg-[#DCEFFF] text-[#1C8AFF]",
+    badgeColor: "bg-[#1C8AFF]",
+  },
+  {
+    id: 4,
+    step: "STEP 4",
+    title: "BOOKING CONFIRMATION",
+    description:
+      "Receive instant confirmation of your booking with all the details.",
+    image: "/assets/aipeSplash.png",
+    color: "bg-[#E4F4FF] text-[#1C8AFF]",
+    badgeColor: "bg-[#1C8AFF]",
+  },
+  {
+    id: 5,
+    step: "STEP 5",
+    title: "EXPERT ASSIGNED",
+    description:
+      "A dedicated CA, CS, or Legal Expert is assigned to your tasks instantly.",
+    image: "/assets/aipeSplash.png",
+    color: "bg-[#ECF9FF] text-[#1C8AFF]",
+    badgeColor: "bg-[#1C8AFF]",
+  },
+  {
+    id: 6,
+    step: "STEP 6",
     title: "WORK DONE",
     description:
       "Track progress in real-time. Receive your filed documents and certificates directly on the app.",
     image: "/assets/aipeSplash.png",
-    color: "bg-[#F0F7FF] text-[#1C8AFF]", // Lightest Blue
+    color: "bg-[#F4FEFF] text-[#1C8AFF]",
     badgeColor: "bg-[#1C8AFF]",
   },
 ];
@@ -51,17 +81,23 @@ const Card = ({
   // Subsequent cards (index > 0) slide up from bottom.
   // Using 0.25 intervals for stagger.
 
+  /*
+   * Animation Logic:
+   * With 6 cards, we need to distribute the entrance animations over the scroll progress (0 to 1).
+   * Using 0.15 intervals allows the last card (index=5) to start at 0.75 and finish at 0.90.
+   * This leaves a little buffer at the end.
+   */
   const ySpring = useTransform(
     scrollYProgress,
-    [index * 0.25, index * 0.25 + 0.25],
+    [index * 0.15, index * 0.15 + 0.15],
     index === 0
       ? ["0px", "0px"] // First card stays at 0 offset
-      : ["120%", `${index * 30}px`], // Others slide in to their offset
+      : ["120%", `${index * 20}px`], // Reduced offset per card to keep stack tighter
   );
 
   const opacitySpring = useTransform(
     scrollYProgress,
-    [index * 0.25, index * 0.25 + 0.1],
+    [index * 0.15, index * 0.15 + 0.1],
     index === 0 ? [1, 1] : [0, 1], // First card always visible
   );
 
@@ -115,10 +151,10 @@ export function HowItWorksSection() {
 
   return (
     <section className="bg-gray-50/50">
-      {/* Height defines scroll distance. 3 cards * decent scroll/card = ~500vh */}
-      <div ref={containerRef} className="relative h-[500vh]">
-        <div className="sticky top-0 h-screen flex flex-col items-center justify-start overflow-hidden pt-20 md:pt-32">
-          <div className="mb-8 md:mb-12 text-center">
+      {/* Increased height to accommodate more scroll distance for 6 cards */}
+      <div ref={containerRef} className="relative h-[800vh]">
+        <div className="sticky top-0 h-screen flex flex-col items-center justify-start overflow-hidden pt-16 md:pt-24">
+          <div className="mb-6 md:mb-8 text-center">
             <h2 className="text-3xl md:text-5xl font-display font-bold text-[#1C8AFF] flex items-center justify-center gap-3">
               HOW{" "}
               <span className="relative h-16 w-24 inline-block">
@@ -133,7 +169,7 @@ export function HowItWorksSection() {
             </h2>
           </div>
 
-          <div className="relative w-full max-w-3xl h-[450px] flex items-center justify-center">
+          <div className="relative w-full max-w-3xl h-[600px] flex items-center justify-center">
             {steps.map((step, index) => (
               <Card
                 key={step.id}

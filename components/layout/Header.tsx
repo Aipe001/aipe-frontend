@@ -55,14 +55,6 @@ export function Header() {
       time: "1 hour ago",
       read: false,
     },
-    {
-      id: 3,
-      bookingId: "12347",
-      title: "New Service Added",
-      desc: "Check out our new Legal Drafting service.",
-      time: "1 day ago",
-      read: false,
-    },
   ]);
 
   const unreadCount = notifications.filter((n) => !n.read).length;

@@ -36,11 +36,11 @@ export default function Home() {
           <div className="page-container">
             <div className="bg-primary/5 rounded-2xl p-6 md:p-12 text-center">
               <h3 className="text-xl md:text-3xl font-bold text-[#1C8AFF] mb-3">
-                Trusted by 6,000+ Businesses
+                Trusted by 6,000+ Users
               </h3>
               <p className="text-muted-foreground max-w-xl mx-auto mb-6">
                 From GST registration to ITR filing, we handle everything so you
-                can focus on your business.
+                can focus on your goals.
               </p>
               <div className="flex flex-wrap justify-center gap-8 md:gap-16 pt-4">
                 {/* Stat 1 */}
@@ -64,10 +64,10 @@ export default function Home() {
                   </div>
                   <div>
                     <div className="text-2xl md:text-3xl font-bold text-foreground">
-                      50k+
+                      5k+
                     </div>
                     <div className="text-xs md:text-sm text-muted-foreground font-medium uppercase tracking-wider">
-                      Filings Done
+                      Services Completed
                     </div>
                   </div>
                 </div>
@@ -92,7 +92,7 @@ export default function Home() {
                   </div>
                   <div>
                     <div className="text-2xl md:text-3xl font-bold text-foreground">
-                      500+
+                      1000+
                     </div>
                     <div className="text-xs md:text-sm text-muted-foreground font-medium uppercase tracking-wider">
                       Verified Experts

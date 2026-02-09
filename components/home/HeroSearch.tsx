@@ -13,8 +13,8 @@ export function HeroSearch() {
               What are you looking for?
             </h1>
             <p className="text-muted-foreground text-sm md:text-lg max-w-2xl mx-auto hidden md:block">
-              Expert financial & legal services at your doorstep. Trained
-              professionals, transparent pricing.
+              Expert financial services at your doorstep. Trained professionals,
+              transparent pricing.
             </p>
           </div>
 
