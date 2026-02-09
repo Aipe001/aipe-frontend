@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { StoreButtons } from "@/components/ui/store-buttons";
-import { MessageSquare } from "lucide-react";
 
 const policyLinks = [
   { name: "Terms of Use", path: "/terms" },
@@ -67,17 +66,6 @@ export function Footer() {
           size="md"
         />
 
-        {/* Write to us button - positioned top right */}
-        <div className="absolute top-6 right-6 md:top-8 md:right-12">
-          <Link
-            href="mailto:hello@aipe.club"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/30 text-white text-sm font-medium hover:bg-white/10 transition-all duration-300"
-          >
-            <MessageSquare className="w-4 h-4" />
-            Write to us
-          </Link>
-        </div>
-
         {/* Main Content */}
         <div className="page-container text-center">
           {/* Main Headline */}
@@ -107,7 +95,6 @@ export function Footer() {
           {/* App Store Buttons */}
           <div className="justify-center">
             <StoreButtons className="mb-8" />
-
           </div>
         </div>
       </div>
@@ -124,7 +111,9 @@ export function Footer() {
             {/* Copyright */}
             <div className="flex items-center gap-2 text-white/60 text-xs md:text-sm">
               <span className="text-lg">©</span>
-              <span>2025 MaestroEdge Solutions Pvt. Ltd. All rights reserved.</span>
+              <span>
+                2025 MaestroEdge Solutions Pvt. Ltd. All rights reserved.
+              </span>
             </div>
 
             {/* Policy Links */}

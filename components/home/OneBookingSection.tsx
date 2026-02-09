@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { StoreButtons } from "@/components/ui/store-buttons";
 
 const tasks = [
   { title: "GST Filing", img: "/assets/gst_filing.png" },
@@ -14,7 +15,9 @@ const tasks = [
 
 export function OneBookingSection() {
   const [isFixed, setIsFixed] = useState(false);
+  const [isCardFixed, setIsCardFixed] = useState(false);
   const buttonSentinelRef = useRef<HTMLDivElement>(null);
+  const cardSentinelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,14 +25,15 @@ export function OneBookingSection() {
         const rect = buttonSentinelRef.current.getBoundingClientRect();
         // The button should be fixed if its original position (sentinel)
         // has moved up past the bottom of the viewport
-        const triggerPoint = window.innerHeight - 32; // bottom-8 is 32px
-
-        // If the sentinel's bottom is ABOVE the trigger point, we fix the button
-        // to the viewport bottom.
-        // Wait, if we scroll down, rect.bottom decreases.
-        // When rect.bottom < window.innerHeight - 32, it means the natural position
-        // is higher up, so we should FIX it to stay at the bottom.
+        const triggerPoint = window.innerHeight - 72; // Moved up by 40px (32 + 40 = 72)
         setIsFixed(rect.bottom < triggerPoint);
+      }
+
+      if (cardSentinelRef.current) {
+        const rect = cardSentinelRef.current.getBoundingClientRect();
+        // Same trigger point logic for the card
+        const triggerPoint = window.innerHeight - 72; // Moved up by 40px
+        setIsCardFixed(rect.bottom < triggerPoint);
       }
     };
 
@@ -73,6 +77,48 @@ export function OneBookingSection() {
         </h2>
       </motion.div>
 
+      {/* Download App Card Sentinel & Container */}
+      {/* Positioned relative to the title area */}
+      <div
+        ref={cardSentinelRef}
+        className="absolute top-28 left-8 md:block z-20 w-[380px] h-[142px]" // Adjusted H to match content
+      >
+        <div
+          className={`${
+            isCardFixed
+              ? "fixed bottom-[72px] left-8 z-50 transition-none scale-100 origin-bottom-left"
+              : "absolute top-0 left-0 scale-100 origin-top-left"
+          } bg-white rounded-3xl p-3 shadow-2xl flex items-center gap-2 border border-gray-100 min-w-[260px]`}
+        >
+          {/* Left Side: Text + Logo */}
+          <div className="flex flex-col items-start gap-1">
+            {" "}
+            {/* Increased gap */}
+            <span className="text-md font-bold text-gray-800 ml-1 uppercase tracking-wide">
+              {" "}
+              {/* Larger font */}
+              Download the
+            </span>
+            <div className="relative w-36 h-12">
+              {" "}
+              {/* Larger logo container */}
+              <Image
+                src="/assets/aipe_logo3.png"
+                alt="Aipe"
+                fill
+                className="object-contain object-left"
+              />
+            </div>
+          </div>
+
+          {/* Right Side: Store Buttons */}
+          <StoreButtons
+            className="flex-col gap-3" // Increased gap
+            buttonClassName="w-40 h-12 py-1 px-3 max-w-none" // Larger buttons
+          />
+        </div>
+      </div>
+
       {/* Carousel Container */}
       <div className="absolute top-[60%] left-0 w-full -translate-y-1/2 z-0">
         <div
@@ -114,7 +160,7 @@ export function OneBookingSection() {
         <div
           className={`${
             isFixed
-              ? "fixed bottom-8 right-8 z-50 transition-none"
+              ? "fixed bottom-[72px] right-8 z-50 transition-none"
               : "absolute bottom-0 right-0"
           }`}
         >
