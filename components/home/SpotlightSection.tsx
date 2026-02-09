@@ -29,8 +29,8 @@ const spotlightItems: SpotlightItem[] = [
   },
   {
     id: 3,
-    title: "Legal Agreements",
-    subtitle: "Rent, Lease & Vendor Contracts",
+    title: "Investment",
+    subtitle: "Stocks, Sip & Mutual Funds",
     buttonText: "Draft Now",
     bgClass: "bg-orange-500 text-white",
   },

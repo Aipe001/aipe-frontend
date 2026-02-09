@@ -72,7 +72,7 @@ export function HeroSection({ hidePhone = false }: HeroSectionProps) {
           <div className="hidden md:block absolute right-0 bottom-0 w-62.5 lg:w-87.5 transition-transform hover:scale-105 duration-500">
             <Image
               src="/assets/expert2.svg"
-              alt="Legal Expert"
+              alt="Finance Expert"
               width={400}
               height={500}
               className="object-contain"

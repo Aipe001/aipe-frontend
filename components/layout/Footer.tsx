@@ -1,60 +1,149 @@
-import Link from "next/link";
-import Image from "next/image";
-import { StoreButtons } from "@/components/ui/store-buttons";
+"use client";
 
-const footerLinks = [
-  // { name: "Home", path: "/" },
-  { name: "Services", path: "/services" },
-  // { name: "Experts", path: "/experts" },
-  { name: "About", path: "/about" },
-  { name: "Bookings", path: "/bookings" },
-  { name: "FAQs", path: "/#faq" },
+import Link from "next/link";
+import { StoreButtons } from "@/components/ui/store-buttons";
+import { MessageSquare } from "lucide-react";
+
+const policyLinks = [
+  { name: "Terms of Use", path: "/terms" },
+  { name: "Privacy Policy", path: "/privacy" },
+  { name: "Equal Opportunity Policy", path: "/equal-opportunity" },
+  { name: "Refund & Cancellation Policy", path: "/refund" },
+  { name: "Vulnerability Disclosure", path: "/vulnerability" },
+  { name: "Annual Return", path: "/annual-return" },
 ];
+
+// Star decoration component
+function StarDecoration({
+  className,
+  size = "md",
+}: {
+  className?: string;
+  size?: "sm" | "md" | "lg";
+}) {
+  const sizeClasses = {
+    sm: "w-3 h-3",
+    md: "w-5 h-5",
+    lg: "w-7 h-7",
+  };
+
+  return (
+    <svg
+      className={`${sizeClasses[size]} ${className}`}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+    >
+      <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
+    </svg>
+  );
+}
 
 export function Footer() {
   return (
-    <footer className="bg-[#1C8AFF] text-white">
-      <div className="page-container py-8 flex flex-col items-center relative">
-        {/* Navigation Links */}
-        <nav className="flex flex-wrap justify-center gap-8 mb-8">
-          {footerLinks.map((link) => (
-            <Link
-              key={link.path}
-              href={link.path}
-              className="text-sm font-medium hover:text-primary-foreground transition-colors"
-            >
-              {link.name}
-            </Link>
-          ))}
-        </nav>
+    <footer className="relative overflow-hidden">
+      {/* Main Footer Section with AIPE blue gradient */}
+      <div
+        className="relative py-16 md:py-24"
+        style={{
+          background:
+            "linear-gradient(180deg, #0a1929 0%, #0d2847 30%, #0a1929 100%)",
+        }}
+      >
+        {/* Decorative Stars - using AIPE blue */}
+        <StarDecoration
+          className="absolute top-12 left-[15%] text-[#1C8AFF] opacity-80"
+          size="md"
+        />
+        <StarDecoration
+          className="absolute top-24 right-[12%] text-[#1C8AFF] opacity-90"
+          size="lg"
+        />
+        <StarDecoration
+          className="absolute top-1/2 left-[5%] text-[#1C8AFF] opacity-60"
+          size="sm"
+        />
+        <StarDecoration
+          className="absolute bottom-32 right-[8%] text-[#1C8AFF] opacity-70"
+          size="md"
+        />
 
-        {/* App Store Buttons */}
-        <StoreButtons className="mb-8 w-full max-w-md mx-auto" />
-
-        {/* Bottom Section */}
-        <div className="w-full flex flex-col items-center gap-6 pt-6 border-t border-footer-foreground/20">
-          <a
+        {/* Write to us button - positioned top right */}
+        <div className="absolute top-6 right-6 md:top-8 md:right-12">
+          <Link
             href="mailto:hello@aipe.club"
-            className="text-base font-medium hover:text-[#000000] transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/30 text-white text-sm font-medium hover:bg-white/10 transition-all duration-300"
           >
-            hello@aipe.club
-          </a>
+            <MessageSquare className="w-4 h-4" />
+            Write to us
+          </Link>
+        </div>
 
-          <div className="flex flex-col md:flex-row w-full items-center justify-between gap-4 text-sm opacity-80">
-            <p className="md:flex-1 md:text-left">Financial Services More</p>
-            <p className="font-medium text-center md:flex-none">
-              Made with <span className="text-[#1C8AFF]">🤍</span> in India
-            </p>
-            <div className="flex items-center gap-0 md:flex-1 md:justify-end">
-              <Image
-                src="/assets/aipe_logo3.png"
-                alt="Aipe Logo"
-                className="h-12 w-auto object-contain"
-                width={100}
-                height={32}
-              />
-              <p>Copyright © 2025 AIPE</p>
+        {/* Main Content */}
+        <div className="page-container text-center">
+          {/* Main Headline */}
+          <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-4 tracking-wide">
+            INDIA&apos;S FIRST
+          </h2>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-wide">
+            <span
+              className="italic font-extrabold"
+              style={{
+                background: "linear-gradient(90deg, #1C8AFF 0%, #60B3FF 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              SMART
+            </span>
+            <span className="text-white"> FINANCE APP</span>
+          </h2>
+
+          {/* Tagline */}
+          <p className="text-white/70 text-base md:text-lg max-w-md mx-auto mb-10">
+            On-demand financial services to empower urban households
+          </p>
+
+          {/* App Store Buttons */}
+          <div className="justify-center">
+            <StoreButtons className="mb-8" />
+
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Bar with links - dark blue to match AIPE theme */}
+      <div
+        className="py-4 px-4"
+        style={{
+          background: "#051221",
+        }}
+      >
+        <div className="page-container">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            {/* Copyright */}
+            <div className="flex items-center gap-2 text-white/60 text-xs md:text-sm">
+              <span className="text-lg">©</span>
+              <span>2025 MaestroEdge Solutions Pvt. Ltd. All rights reserved.</span>
             </div>
+
+            {/* Policy Links */}
+            <nav className="flex flex-wrap justify-center gap-x-4 gap-y-2">
+              {policyLinks.map((link, index) => (
+                <Link
+                  key={link.path}
+                  href={link.path}
+                  className="text-white/60 text-xs hover:text-white transition-colors"
+                >
+                  {link.name}
+                  {index < policyLinks.length - 1 && (
+                    <span className="ml-4 text-white/30 hidden md:inline">
+                      |
+                    </span>
+                  )}
+                </Link>
+              ))}
+            </nav>
           </div>
         </div>
       </div>

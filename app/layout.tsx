@@ -36,7 +36,7 @@ export default function RootLayout({
             <Header />
             <main className="flex-1">{children}</main>
             <Footer />
-            <BottomNav />
+            {/* <BottomNav /> */}
           </div>
         </Providers>
       </body>

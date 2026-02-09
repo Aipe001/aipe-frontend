@@ -50,7 +50,7 @@ const steps = [
     step: "STEP 5",
     title: "EXPERT ASSIGNED",
     description:
-      "A dedicated CA, CS, or Legal Expert is assigned to your tasks instantly.",
+      "A dedicated CA, CS, or Investment Expert is assigned to your tasks instantly.",
     image: "/assets/aipeSplash.png",
     color: "bg-[#ECF9FF] text-[#1C8AFF]",
     badgeColor: "bg-[#1C8AFF]",

@@ -56,9 +56,9 @@ const services = [
   }, // New filler
   {
     icon: Scale,
-    name: "Legal",
+    name: "Trademark",
     color: "bg-amber-100 text-amber-600",
-    id: "legal",
+    id: "trademark",
   }, // New filler
 ];
 
