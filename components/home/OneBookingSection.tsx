@@ -94,7 +94,7 @@ export function OneBookingSection() {
           <div className="flex flex-col items-start gap-1">
             {" "}
             {/* Increased gap */}
-            <span className="text-md font-bold text-gray-800 ml-1 uppercase tracking-wide">
+            <span className="text-md font-bold text-[#1C8AFF] ml-1 uppercase tracking-wide">
               {" "}
               {/* Larger font */}
               Download the

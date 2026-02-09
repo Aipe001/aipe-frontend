@@ -124,7 +124,7 @@ export function FAQSection() {
   return (
     <section id="faq" className="py-8 md:py-12">
       <div className="page-container">
-        <div className="bg-[#F5F5F5] rounded-[24px] p-6 md:p-12">
+        <div className="bg-primary/5 rounded-[24px] p-6 md:p-12">
           <div className="text-center mb-8 md:mb-12">
             <h2 className="text-2xl md:text-4xl font-bold uppercase text-[#1C8AFF]">
               FAQs
