@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Harmony Finance Hub",
+  title: "aipe",
   description: "Financial services for your business & life",
 };
 

@@ -111,9 +111,7 @@ export function Footer() {
             {/* Copyright */}
             <div className="flex items-center gap-2 text-white/60 text-xs md:text-sm">
               <span className="text-lg">©</span>
-              <span>
-                2025 MaestroEdge Solutions Pvt. Ltd. All rights reserved.
-              </span>
+              <span>2025 aipe. All rights reserved.</span>
             </div>
 
             {/* Policy Links */}
