@@ -82,14 +82,20 @@ export function Footer() {
                 backgroundClip: "text",
               }}
             >
-              SMART
+              QUICK FINANCE SERVICE
             </span>
-            <span className="text-white"> FINANCE APP</span>
+            <span className="text-white"> APP</span>
           </h2>
 
           {/* Tagline */}
-          <p className="text-white/70 text-base md:text-lg max-w-md mx-auto mb-10">
-            On-demand financial services to empower urban households
+          <p className="text-white/70 text-base md:text-lg max-w-3xl mx-auto mb-10 flex flex-col gap-2">
+            <span>
+              Enabling people to get expert help for their finance in 10
+              minutes.
+            </span>
+            <span>
+              Personalized hand-holding/high-quality & affordable services.
+            </span>
           </p>
 
           {/* App Store Buttons */}

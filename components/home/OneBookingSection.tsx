@@ -6,21 +6,35 @@ import { useEffect, useRef, useState } from "react";
 import { StoreButtons } from "@/components/ui/store-buttons";
 
 const tasks = [
-  { title: "GST Filing", img: "/assets/gst_filing.png" },
+  // { title: "Loan Assist", img: "/assets/loan_assist.png" },
+  { title: "Improve Credit Score", img: "/assets/improve_credit_score.png" },
+  { title: "Loan Experts", img: "/assets/loan_experts.png" },
+  { title: "Stock & Equity Experts", img: "/assets/stock_equity_experts.png" },
+  { title: "Mutual Fund Expert", img: "/assets/mutual_fund_expert.png" },
+  { title: "Gold & Silver Expert", img: "/assets/gold_silver_expert.png" },
+  { title: "Intraday Trading", img: "/assets/intraday_trading.png" },
+  { title: "Taxation", img: "/assets/taxation.png" },
   { title: "ITR Filing", img: "/assets/itr_filing.png" },
-  { title: "Trademark", img: "/assets/trademark.png" },
+  { title: "GST Filing", img: "/assets/gst_filing.png" },
+  { title: "Apply & Register", img: "/assets/apply_register.png" },
   { title: "Company Reg", img: "/assets/company_reg.png" },
-  { title: "Loan Assist", img: "/assets/loan_assist.png" },
+  { title: "Apply New GST", img: "/assets/apply_new_gst.png" },
+  { title: "Trademark", img: "/assets/trademark.png" },
+  { title: "Start-Up Registeration", img: "/assets/start_up_register.png" },
+  { title: "Business Modelling", img: "/assets/business_modelling.png" },
 ];
 
 export function OneBookingSection() {
   const [isFixed, setIsFixed] = useState(false);
   const [isCardFixed, setIsCardFixed] = useState(false);
+  const [showChatTooltip, setShowChatTooltip] = useState(false);
   const buttonSentinelRef = useRef<HTMLDivElement>(null);
   const cardSentinelRef = useRef<HTMLDivElement>(null);
+  const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
+      // Sticky button logic
       if (buttonSentinelRef.current) {
         const rect = buttonSentinelRef.current.getBoundingClientRect();
         // The button should be fixed if its original position (sentinel)
@@ -29,19 +43,37 @@ export function OneBookingSection() {
         setIsFixed(rect.bottom < triggerPoint);
       }
 
+      // Sticky card logic
       if (cardSentinelRef.current) {
         const rect = cardSentinelRef.current.getBoundingClientRect();
         // Same trigger point logic for the card
         const triggerPoint = window.innerHeight - 72; // Moved up by 40px
         setIsCardFixed(rect.bottom < triggerPoint);
       }
+
+      // Chatbot Tooltip Logic
+      // User is scrolling, hide tooltip
+      setShowChatTooltip(false);
+
+      // Clear existing timeout
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+
+      // Set new timeout to show tooltip after scrolling stops
+      scrollTimeoutRef.current = setTimeout(() => {
+        setShowChatTooltip(true);
+      }, 1000);
     };
 
     window.addEventListener("scroll", handleScroll);
     // Initial check
     handleScroll();
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+    };
   }, []);
 
   return (
@@ -72,8 +104,8 @@ export function OneBookingSection() {
         className="text-center z-10 mt-0 mb-32 relative"
       >
         <h2 className="text-4xl md:text-6xl font-display font-bold text-white uppercase italic tracking-wider leading-none drop-shadow-lg">
-          ONE BOOKING, <span className="text-white/80">MANY</span> <br />
-          <span className="text-white">TASKS</span>
+          BOOK FINANCE EXPERTS <br />
+          <span className="text-white">IN 10 MINUTES</span>
         </h2>
       </motion.div>
 
@@ -136,7 +168,7 @@ export function OneBookingSection() {
             {[...tasks, ...tasks, ...tasks, ...tasks].map((item, i) => (
               <div
                 key={i}
-                className="w-48 h-60 bg-white rounded-3xl p-4 pb-8 flex flex-col gap-4 shadow-xl shrink-0 transition-transform duration-300"
+                className="w-60 h-60 bg-white rounded-3xl pb-4 flex flex-col gap-4 shadow-xl shrink-0 transition-transform duration-300 overflow-hidden"
               >
                 <div className="flex-1 bg-secondary rounded-2xl overflow-hidden flex items-center justify-center relative">
                   <Image
@@ -150,6 +182,31 @@ export function OneBookingSection() {
             ))}
           </div>
         </div>
+      </div>
+
+      {/* Sticky Chatbot Button - Always fixed */}
+      <div className="fixed bottom-[144px] right-8 z-50 flex items-center justify-end gap-3 pointer-events-none">
+        {/* Tooltip */}
+        <div
+          className={`bg-white text-[#1C8AFF] px-4 py-2 rounded-xl shadow-lg border border-gray-100 text-sm font-bold whitespace-nowrap transition-all duration-300 transform origin-right ${
+            showChatTooltip
+              ? "opacity-100 translate-x-0 scale-100"
+              : "opacity-0 translate-x-4 scale-95"
+          }`}
+        >
+          Meet Fira, your Finance Expert AI
+        </div>
+
+        <button className="bg-white rounded-full p-2 shadow-lg hover:scale-110 transition-transform w-16 h-16 flex items-center justify-center border border-gray-100 pointer-events-auto">
+          <div className="relative w-12 h-12">
+            <Image
+              src="/assets/FIRA_logo-removebg.png"
+              alt="FIRA Chatbot"
+              fill
+              className="object-contain"
+            />
+          </div>
+        </button>
       </div>
 
       {/* Contact Button Container & Sentinel */}

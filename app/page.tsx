@@ -38,9 +38,12 @@ export default function Home() {
               <h3 className="text-xl md:text-3xl font-bold text-[#1C8AFF] mb-3">
                 Trusted by 6,000+ Users
               </h3>
-              <p className="text-muted-foreground max-w-xl mx-auto mb-6">
-                From GST registration to ITR filing, we handle everything so you
-                can focus on your goals.
+              <p className="text-muted-foreground max-w-xl mx-auto mb-6 flex flex-col">
+                <span>
+                  From improving CIBIL, credit score, loan guidance, taxation &
+                  filing to investment like SIPs, mutual funds, stocks & gold.
+                </span>
+                <span>Book expert help in 10 minutes.</span>
               </p>
               <div className="flex flex-wrap justify-center gap-8 md:gap-16 pt-4">
                 {/* Stat 1 */}

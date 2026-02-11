@@ -30,8 +30,9 @@ export function HeroSection({ hidePhone = false }: HeroSectionProps) {
             </span>{" "}
             APP
           </h1>
-          <p className="text-muted-foreground text-sm md:text-lg max-w-lg mx-auto font-medium pt-1">
-            On-demand financial services to empower urban households
+          <p className="text-muted-foreground text-sm md:text-lg max-w-lg mx-auto font-medium pt-1 flex flex-col">
+            <span>On-demand finance experts & services.</span>
+            <span>Investment/Credit & Loan/Taxation</span>
           </p>
 
           {/* App Store Buttons */}
