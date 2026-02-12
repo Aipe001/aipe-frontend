@@ -10,7 +10,7 @@ interface HeroSectionProps {
 export function HeroSection({ hidePhone = false }: HeroSectionProps) {
   return (
     <section className="relative bg-background pt-8 pb-0 md:pt-12 overflow-hidden">
-      <div className="page-container flex flex-col items-center text-center z-10 relative">
+      <div className="w-full flex flex-col items-center text-center z-10 relative">
         {/* Top Navigation / Pill (Optional, matching Snabbit style) */}
         {/* <div className="hidden md:flex items-center gap-6 bg-white/80 backdrop-blur-md px-6 py-2 rounded-full shadow-sm mb-8 border border-gray-100">
                     <span className="text-sm font-medium text-gray-600 hover:text-primary cursor-pointer">Services</span>
@@ -21,34 +21,36 @@ export function HeroSection({ hidePhone = false }: HeroSectionProps) {
                 </div> */}
 
         {/* Hero Text */}
-        <div className="space-y-2 mb-8 md:mb-12 max-w-3xl mx-auto">
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-display font-extrabold tracking-tight text-foreground uppercase leading-tight">
-            INDIA&apos;S FIRST <br />
-            <span className="relative inline-block text-[#1C8AFF]">
-              QUICK FINANCE SERVICE
-              <span className="absolute bottom-1 left-0 w-full h-3 bg-[#1C8AFF]/20 -z-10 skew-x-12 transform"></span>
-            </span>{" "}
-            APP
-          </h1>
-          <p className="text-muted-foreground text-sm md:text-lg max-w-lg mx-auto font-medium pt-1 flex flex-col">
-            <span>On-demand finance experts & services.</span>
-            <span>Investment/Credit & Loan/Taxation</span>
-          </p>
+        <div className="page-container w-full">
+          <div className="space-y-2 mb-8 md:mb-12 max-w-3xl mx-auto">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-display font-extrabold tracking-tight text-foreground uppercase leading-tight">
+              INDIA&apos;S FIRST <br />
+              <span className="relative inline-block text-[#1C8AFF]">
+                QUICK FINANCE SERVICE
+                <span className="absolute bottom-1 left-0 w-full h-3 bg-[#1C8AFF]/20 -z-10 skew-x-12 transform"></span>
+              </span>{" "}
+              APP
+            </h1>
+            <p className="text-muted-foreground text-sm md:text-lg max-w-lg mx-auto font-medium pt-1 flex flex-col">
+              <span>On-demand finance experts & services.</span>
+              <span>Investment/Credit & Loan/Taxation</span>
+            </p>
 
-          {/* App Store Buttons */}
-          <StoreButtons className="pt-1" />
+            {/* App Store Buttons */}
+            <StoreButtons className="pt-1" />
+          </div>
         </div>
 
         {/* Hero Images Layout */}
-        <div className="relative w-full max-w-6xl mx-auto flex justify-center items-end mt-4 md:mt-8 min-h-75 md:min-h-125">
+        <div className="relative w-full mx-auto flex justify-center items-end mt-4 md:mt-8 min-h-75 md:min-h-125">
           {/* Expert 1 (Left) */}
-          <div className="hidden md:block absolute left-0 bottom-0 w-62.5 lg:w-87.5 transition-transform hover:scale-105 duration-500">
+          <div className="hidden md:block absolute left-0 md:left-8 lg:left-32 -bottom-7 w-80 lg:w-[450px] transition-transform hover:scale-105 duration-500 rounded-3xl [mask-image:linear-gradient(to_bottom,black_80%,transparent)]">
             <Image
-              src="/assets/expert1.svg"
+              src="/assets/main_banner_left_side.png"
               alt="Financial Expert"
               width={400}
               height={500}
-              className="object-contain"
+              className="w-full h-auto object-cover"
               priority
             />
           </div>
@@ -70,13 +72,13 @@ export function HeroSection({ hidePhone = false }: HeroSectionProps) {
           )}
 
           {/* Expert 2 (Right) */}
-          <div className="hidden md:block absolute right-0 bottom-0 w-62.5 lg:w-87.5 transition-transform hover:scale-105 duration-500">
+          <div className="hidden md:block absolute right-0 md:right-8 lg:right-32 -bottom-7 w-80 lg:w-[450px] transition-transform hover:scale-105 duration-500 rounded-3xl [mask-image:linear-gradient(to_bottom,black_80%,transparent)]">
             <Image
-              src="/assets/expert2.svg"
+              src="/assets/main_banner_right_side.png"
               alt="Finance Expert"
               width={400}
               height={500}
-              className="object-contain"
+              className="w-full h-auto object-cover"
               priority
             />
           </div>

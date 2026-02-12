@@ -89,7 +89,7 @@ export function OneBookingSection() {
           }
         }
         .animate-scroll {
-          animation: scroll 30s linear infinite;
+          animation: scroll 60s linear infinite;
         }
         .animate-scroll:hover {
           animation-play-state: paused;
@@ -103,9 +103,9 @@ export function OneBookingSection() {
         transition={{ duration: 0.8 }}
         className="text-center z-10 mt-0 mb-32 relative"
       >
-        <h2 className="text-4xl md:text-6xl font-display font-bold text-white uppercase italic tracking-wider leading-none drop-shadow-lg">
-          BOOK FINANCE EXPERTS <br />
-          <span className="text-white">IN 10 MINUTES</span>
+        <h2 className="text-4xl md:text-6xl font-display font-bold text-white italic tracking-wider leading-none drop-shadow-lg">
+          Book Finance Expert <br />
+          <span className="text-white">Service In 10 Minutes</span>
         </h2>
       </motion.div>
 
@@ -120,10 +120,10 @@ export function OneBookingSection() {
             isCardFixed
               ? "fixed bottom-[72px] left-8 z-50 transition-none scale-100 origin-bottom-left"
               : "absolute top-0 left-0 scale-100 origin-top-left"
-          } bg-white rounded-3xl p-3 shadow-2xl flex items-center gap-2 border border-gray-100 min-w-[260px]`}
+          } bg-white rounded-3xl p-3 shadow-2xl flex items-center gap-2 border border-gray-100 min-w-[200px]`}
         >
           {/* Left Side: Text + Logo */}
-          <div className="flex flex-col items-start gap-1">
+          <div className="flex flex-col items-start gap-0">
             {" "}
             {/* Increased gap */}
             <span className="text-md font-bold text-[#1C8AFF] ml-1 uppercase tracking-wide">
@@ -131,7 +131,7 @@ export function OneBookingSection() {
               {/* Larger font */}
               Download the
             </span>
-            <div className="relative w-36 h-12">
+            <div className="relative w-34 h-12">
               {" "}
               {/* Larger logo container */}
               <Image
@@ -194,7 +194,7 @@ export function OneBookingSection() {
               : "opacity-0 translate-x-4 scale-95"
           }`}
         >
-          Meet Fira, your Finance Expert AI
+          Meet Fira, your Finance Companion
         </div>
 
         <button className="bg-white rounded-full p-2 shadow-lg hover:scale-110 transition-transform w-16 h-16 flex items-center justify-center border border-gray-100 pointer-events-auto">
