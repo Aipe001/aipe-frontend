@@ -11,6 +11,7 @@ import { ServiceModal } from "@/components/home/ServiceModal";
 import { SlotBookingModal } from "@/components/home/SlotBookingModal";
 import { ServicesInfo } from "@/components/home/ServicesInfo";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
+import { FAQSection } from "@/components/home/FAQSection";
 
 export default function Home() {
   const [selectedService, setSelectedService] = useState<string | null>(null);
@@ -120,6 +121,9 @@ export default function Home() {
 
       {/* Testimonials Section */}
       <TestimonialsSection />
+
+      {/* FAQ Section */}
+      <FAQSection limit={7} />
 
       {/* Service Modal */}
       <ServiceModal

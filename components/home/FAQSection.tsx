@@ -120,7 +120,13 @@ const faqData = [
   },
 ];
 
-export function FAQSection() {
+interface FAQSectionProps {
+  limit?: number;
+}
+
+export function FAQSection({ limit }: FAQSectionProps) {
+  const displayedFaqs = limit ? faqData.slice(0, limit) : faqData;
+
   return (
     <section id="faq" className="py-8 md:py-12">
       <div className="page-container">
@@ -133,7 +139,7 @@ export function FAQSection() {
 
           <div className="max-w-3xl mx-auto">
             <Accordion type="multiple" className="w-full space-y-4">
-              {faqData.map((faq, index) => (
+              {displayedFaqs.map((faq, index) => (
                 <AccordionItem
                   key={index}
                   value={`item-${index}`}
