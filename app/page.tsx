@@ -2,7 +2,7 @@
 
 import { ScrollPhoneLayout } from "@/components/home/ScrollPhoneLayout";
 import { ServiceGrid } from "@/components/home/ServiceGrid";
-import { SpotlightSection } from "@/components/home/SpotlightSection";
+import { TrendingServices } from "../components/home/TrendingServices";
 import { HowItWorksSection } from "@/components/home/HowItWorksSection";
 import { FAQSection } from "@/components/home/FAQSection";
 import { useRouter } from "next/navigation";
@@ -26,7 +26,7 @@ export default function Home() {
         <ServiceGrid onServiceClick={handleServiceClick} />
 
         {/* Promotional/Spotlight Banners */}
-        <SpotlightSection />
+        <TrendingServices />
 
         {/* How It Works Sticky Section */}
         <HowItWorksSection />

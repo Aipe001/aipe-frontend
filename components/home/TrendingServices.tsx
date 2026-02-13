@@ -44,7 +44,7 @@ const spotlightItems: SpotlightItem[] = [
   },
 ];
 
-export function SpotlightSection() {
+export function TrendingServices() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: "left" | "right") => {

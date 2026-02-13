@@ -42,7 +42,7 @@ export function Footer() {
     <footer className="relative overflow-hidden">
       {/* Main Footer Section with AIPE blue gradient */}
       <div
-        className="relative py-16 md:py-24"
+        className="relative pt-16 pb-4 md:py-24"
         style={{
           background:
             "linear-gradient(180deg, #0a1929 0%, #0d2847 30%, #0a1929 100%)",
@@ -102,6 +102,7 @@ export function Footer() {
           <div className="justify-center">
             <StoreButtons className="mb-8" />
           </div>
+          <p>Made with 🩵 in India</p>
         </div>
       </div>
 
