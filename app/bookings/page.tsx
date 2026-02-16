@@ -65,7 +65,7 @@ export default function Bookings() {
   return (
     <div className="py-12 bg-background min-h-screen">
       <div className="page-container">
-        <h1 className="text-3xl font-display font-bold text-primary mb-8">
+        <h1 className="text-3xl font-display font-bold text-[#1C8AFF] mb-8">
           My Bookings
         </h1>
 
@@ -75,7 +75,7 @@ export default function Bookings() {
             <CardContent className="p-8 flex flex-col items-center">
               <Avatar className="w-32 h-32 mb-4">
                 <AvatarImage src="/placeholder.svg" />
-                <AvatarFallback className="text-2xl bg-primary text-primary-foreground">
+                <AvatarFallback className="text-2xl bg-[#1C8AFF] text-primary-foreground">
                   U
                 </AvatarFallback>
               </Avatar>
@@ -109,14 +109,14 @@ export default function Bookings() {
                         <>
                           <Button
                             onClick={() => handleJoinCall(booking.id)}
-                            className="w-full"
+                            className="w-full bg-[#1C8AFF] hover:bg-[#1C8AFF]/90 cursor-pointer"
                           >
                             Join Video Call
                           </Button>
                           <Button
                             variant="outline"
                             onClick={() => handleJoinCall(booking.id)}
-                            className="w-full"
+                            className="w-full cursor-pointer"
                           >
                             Chat
                           </Button>
@@ -124,7 +124,7 @@ export default function Bookings() {
                       ) : (
                         <Button
                           onClick={() => handleViewDetails(booking.id)}
-                          className="w-full"
+                          className="w-full bg-[#1C8AFF] hover:bg-[#1C8AFF]/90 cursor-pointer"
                         >
                           View Details
                         </Button>

@@ -81,6 +81,18 @@ export const servicesData: Record<string, Service[]> = {
       image: "/assets/gst_filing.png",
     },
   ],
+  Registrations: [
+    {
+      id: "reg-1",
+      title: "GST Registration",
+      image: "/assets/apply_new_gst.png",
+    },
+    {
+      id: "reg-2",
+      title: "New Business Registration",
+      image: "/assets/start_up_register.png",
+    },
+  ],
 };
 
 export default function BookingPage() {
@@ -115,7 +127,7 @@ export default function BookingPage() {
             className="w-full flex flex-col items-center"
             onValueChange={setActiveTab}
           >
-            <TabsList className="w-full max-w-4xl grid grid-cols-2 md:grid-cols-5 h-auto md:h-14 bg-gray-100 p-1 rounded-2xl mb-12">
+            <TabsList className="w-full max-w-6xl grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 h-auto min-h-14 bg-gray-100 p-1 rounded-2xl mb-12">
               {Object.keys(servicesData).map((category) => (
                 <TabsTrigger
                   key={category}
