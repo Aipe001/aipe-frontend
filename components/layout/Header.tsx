@@ -5,12 +5,12 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import {
   Search,
-  MapPin,
   User,
   Bell,
   Settings,
   LogOut,
   LogIn,
+  Menu,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,8 +22,17 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  SheetClose,
+} from "@/components/ui/sheet";
 import { useState } from "react";
 import { Check, Trash2 } from "lucide-react";
+import { LocationSelector } from "@/components/layout/LocationSelector";
 
 const navLinks = [
   { name: "Services", path: "/services" },
@@ -34,7 +43,6 @@ const navLinks = [
 export function Header() {
   const pathname = usePathname();
   const router = useRouter();
-  const [location, setLocation] = useState("New Delhi");
   const [isSignedIn, setIsSignedIn] = useState(true);
 
   // Notification State
@@ -79,14 +87,71 @@ export function Header() {
     setNotifications([]);
   };
 
-  const cities = ["New Delhi", "Mumbai", "Kolkata", "Chennai", "Gandhinagar"];
-
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="page-container">
-        <div className="flex h-16 items-center justify-between gap-4 relative">
-          {/* Logo & Location (Left) */}
-          <div className="flex items-center gap-4 md:gap-8">
+        <div className="flex h-16 items-center justify-between gap-2 md:gap-4 relative">
+          {/* Mobile Left: Hamburger + Logo2 */}
+          <div className="flex md:hidden items-center gap-3">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="-ml-2">
+                  <Menu className="h-6 w-6" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-[300px] sm:w-[400px]">
+                <SheetHeader>
+                  <SheetTitle className="text-left">
+                    <Image
+                      src="/assets/aipe_logo1.png"
+                      alt="Aipe Logo"
+                      width={100}
+                      height={32}
+                      className="object-contain"
+                      priority
+                      unoptimized
+                    />
+                  </SheetTitle>
+                </SheetHeader>
+                <div className="flex flex-col gap-6 mt-8">
+                  {/* Location in Hamburger */}
+                  <LocationSelector className="w-full justify-between py-2 rounded-md" />
+
+                  <div className="flex flex-col gap-2">
+                    {navLinks.map((link) => (
+                      <SheetClose key={link.path} asChild>
+                        <Link
+                          href={link.path}
+                          className={`text-base font-medium px-2 py-2 transition-colors hover:text-primary hover:bg-muted/50 rounded-md ${
+                            pathname === link.path
+                              ? "text-primary bg-primary/5"
+                              : "text-muted-foreground"
+                          }`}
+                        >
+                          {link.name}
+                        </Link>
+                      </SheetClose>
+                    ))}
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
+
+            <Link href="/" className="flex items-center">
+              <Image
+                src="/assets/aipe_logo2.png"
+                alt="Aipe Logo"
+                width={32}
+                height={32}
+                className="object-contain"
+                priority
+                unoptimized
+              />
+            </Link>
+          </div>
+
+          {/* Desktop Left: Logo1 + Location */}
+          <div className="hidden md:flex items-center gap-4 md:gap-8">
             <Link href="/" className="flex items-center gap-2">
               <Image
                 src="/assets/aipe_logo1.png"
@@ -99,51 +164,42 @@ export function Header() {
               />
             </Link>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <div className="hidden md:flex items-center gap-1.5 text-sm text-foreground/80 hover:text-primary cursor-pointer transition-colors bg-muted/50 px-3 py-1.5 rounded-full ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                  <MapPin className="w-4 h-4 text-primary" />
-                  <span className="font-medium truncate max-w-[150px]">
-                    {location}, India
-                  </span>
-                  <span className="text-xs text-muted-foreground">▼</span>
-                </div>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-[200px]">
-                {cities.map((city) => (
-                  <DropdownMenuItem
-                    key={city}
-                    onClick={() => setLocation(city)}
-                    className={`cursor-pointer ${location === city ? "bg-primary/10 text-primary font-medium" : ""}`}
-                  >
-                    {city}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <LocationSelector />
           </div>
 
-          {/* Desktop Navigation (Center) - Absolute Centered */}
-          <nav className="hidden md:flex items-center gap-6 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                href={link.path}
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  pathname === link.path
-                    ? "text-primary"
-                    : "text-muted-foreground"
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
-          </nav>
+          {/* Center: Desktop Nav OR Mobile Search */}
+          <div className="flex-1 flex justify-center px-2 md:px-0">
+            {/* Desktop Nav - Absolute Centered */}
+            <nav className="hidden md:flex items-center gap-6 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  href={link.path}
+                  className={`text-sm font-medium transition-colors hover:text-primary ${
+                    pathname === link.path
+                      ? "text-primary"
+                      : "text-muted-foreground"
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </nav>
+
+            {/* Mobile Search */}
+            <div className="flex md:hidden relative w-full max-w-[200px]">
+              <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#1C8AFF]" />
+              <Input
+                type="search"
+                placeholder="Search..."
+                className="w-full pl-8 h-8 text-xs bg-muted/50 hover:bg-gray-200 transition-colors duration-300 border-0 focus-visible:ring-1 focus-visible:ring-[#1C8AFF]"
+              />
+            </div>
+          </div>
 
           {/* Right Actions */}
-          <div className="flex items-center gap-2 sm:gap-4">
-            {/* Mobile: Location shows here or simpler header? keeping standard for now */}
-
+          <div className="flex items-center gap-2 sm:gap-4 md:ml-auto">
+            {/* Desktop Search */}
             <div className="hidden md:block relative w-48 lg:w-64">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#1C8AFF]" />
               <Input
