@@ -53,7 +53,7 @@ export function KeyFeaturesSection() {
                 key={item.id}
                 className={`h-40 md:h-48 rounded-2xl p-6 flex flex-col justify-between ${item.bgClass} relative overflow-hidden group`}
               >
-                <div className="relative z-10">
+                <div className="relative z-10 flex flex-col items-center text-center">
                   <div className="mb-4 p-2 bg-white/20 w-fit rounded-xl backdrop-blur-sm">
                     {item.icon}
                   </div>

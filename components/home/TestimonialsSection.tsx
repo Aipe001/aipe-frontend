@@ -6,30 +6,30 @@ import { Star } from "lucide-react";
 const testimonials = [
   {
     id: 1,
-    name: "Sarah Johnson",
+    name: "Rajesh Kumar",
     role: "Small Business Owner",
     image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150&h=150",
+      "https://images.unsplash.com/photo-1572957946666-2e386e1e913d?auto=format&fit=crop&q=80&w=150&h=150",
     review:
       "The expert I booked helped me sort out my GST filing in significantly less time than I expected. Highly recommended!",
     rating: 5,
   },
   {
     id: 2,
-    name: "Michael Chen",
+    name: "Priya Patel",
     role: "Freelance Designer",
     image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150&h=150",
+      "https://plus.unsplash.com/premium_photo-1682089810582-f7b200217b67?auto=format&fit=crop&q=80&w=150&h=150",
     review:
       "I was confused about my investment options. The consultation provided clarity and a clear path forward for my portfolio.",
     rating: 5,
   },
   {
     id: 3,
-    name: "Emily Davis",
+    name: "Arjun Mehta",
     role: "Startup Founder",
     image:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=150&h=150",
+      "https://images.unsplash.com/flagged/photo-1571367034861-e6729ad9c2d5?auto=format&fit=crop&q=80&w=150&h=150",
     review:
       "Excellent service! The seamless process of booking and connecting with a verifiable expert gave me great peace of mind.",
     rating: 5,
