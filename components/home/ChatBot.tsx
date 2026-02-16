@@ -174,7 +174,7 @@ export function ChatBot() {
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: 20, scale: 0.95 }}
               transition={{ duration: 0.3 }}
-              className="bg-white text-[#1C8AFF] px-4 py-2 rounded-xl shadow-lg border border-gray-100 text-sm font-bold whitespace-nowrap origin-right absolute right-[70px]"
+              className="bg-white text-[#000000] px-4 py-2 rounded-xl shadow-lg border border-gray-100 text-sm font-bold whitespace-nowrap origin-right absolute right-[70px]"
             >
               Meet Fira, your Finance Companion
             </motion.div>

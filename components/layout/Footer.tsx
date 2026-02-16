@@ -42,7 +42,7 @@ export function Footer() {
     <footer className="relative overflow-hidden">
       {/* Main Footer Section with AIPE blue gradient */}
       <div
-        className="relative pt-16 pb-4 md:py-24"
+        className="relative pt-16 pb-4 md:pt-24 md:pb-8"
         style={{
           background:
             "linear-gradient(180deg, #0a1929 0%, #0d2847 30%, #0a1929 100%)",
@@ -70,11 +70,11 @@ export function Footer() {
         <div className="page-container text-center">
           {/* Main Headline */}
           <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-4 tracking-wide">
-            INDIA&apos;S FIRST
+            India&apos;s First
           </h2>
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-wide">
             <span
-              className="italic font-extrabold"
+              className="font-extrabold"
               style={{
                 background: "linear-gradient(90deg, #1C8AFF 0%, #60B3FF 100%)",
                 WebkitBackgroundClip: "text",
@@ -82,7 +82,7 @@ export function Footer() {
                 backgroundClip: "text",
               }}
             >
-              QUICK FINANCE SERVICE
+              Quick Finance Service
             </span>
             <span className="text-white"> APP</span>
           </h2>
@@ -102,7 +102,7 @@ export function Footer() {
           <div className="justify-center">
             <StoreButtons className="mb-8" />
           </div>
-          <p>Made with 🩵 in India</p>
+          <p>Made with ❤️ in India</p>
         </div>
       </div>
 

@@ -69,7 +69,7 @@ export default function Home() {
                     <div className="text-2xl md:text-3xl font-bold text-foreground">
                       5k+
                     </div>
-                    <div className="text-xs md:text-sm text-muted-foreground font-medium uppercase tracking-wider">
+                    <div className="text-xs md:text-sm text-muted-foreground font-medium tracking-wider">
                       Services Completed
                     </div>
                   </div>
@@ -97,7 +97,7 @@ export default function Home() {
                     <div className="text-2xl md:text-3xl font-bold text-foreground">
                       1000+
                     </div>
-                    <div className="text-xs md:text-sm text-muted-foreground font-medium uppercase tracking-wider">
+                    <div className="text-xs md:text-sm text-muted-foreground font-medium tracking-wider">
                       Verified Experts
                     </div>
                   </div>
@@ -119,7 +119,7 @@ export default function Home() {
                     <div className="text-2xl md:text-3xl font-bold text-foreground">
                       4.9/5
                     </div>
-                    <div className="text-xs md:text-sm text-muted-foreground font-medium uppercase tracking-wider">
+                    <div className="text-xs md:text-sm text-muted-foreground font-medium tracking-wider">
                       Customer Rating
                     </div>
                   </div>

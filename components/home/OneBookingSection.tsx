@@ -90,7 +90,7 @@ export function OneBookingSection() {
         transition={{ duration: 0.8 }}
         className="text-center z-10 mt-0 mb-32 relative"
       >
-        <h2 className="text-4xl md:text-6xl font-display font-bold text-white italic tracking-wider leading-none drop-shadow-lg">
+        <h2 className="text-4xl md:text-6xl font-display font-bold text-white tracking-wider leading-none drop-shadow-lg">
           Book Finance Expert <br />
           <span className="text-white">Service In 10 Minutes</span>
         </h2>
@@ -110,7 +110,7 @@ export function OneBookingSection() {
         >
           {/* Left Side: Text + Logo */}
           <div className="flex flex-col items-start gap-0">
-            <span className="text-md font-bold text-[#1C8AFF] ml-1 uppercase tracking-wide">
+            <span className="text-lg font-bold text-[#1C8AFF] ml-1 tracking-wide">
               Download the
             </span>
             <div className="relative w-34 h-12">

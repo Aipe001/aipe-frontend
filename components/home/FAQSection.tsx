@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -125,7 +128,9 @@ interface FAQSectionProps {
 }
 
 export function FAQSection({ limit }: FAQSectionProps) {
-  const displayedFaqs = limit ? faqData.slice(0, limit) : faqData;
+  const [showAll, setShowAll] = useState(false);
+  const initialLimit = limit || 7;
+  const displayedFaqs = showAll ? faqData : faqData.slice(0, initialLimit);
 
   return (
     <section id="faq" className="py-8 md:py-12">
@@ -156,6 +161,17 @@ export function FAQSection({ limit }: FAQSectionProps) {
                 </AccordionItem>
               ))}
             </Accordion>
+
+            {faqData.length > initialLimit && (
+              <div className="mt-8 text-right">
+                <button
+                  onClick={() => setShowAll(!showAll)}
+                  className="text-[#1C8AFF] font-semibold hover:underline text-lg"
+                >
+                  {showAll ? "Show less..." : "See all..."}
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>

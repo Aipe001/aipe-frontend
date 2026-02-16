@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { servicesData, Service } from "./all/page";
-import { ServiceCard } from "@/components/ServiceCard";
+import { TitleServiceCard } from "@/components/home/TitleServiceCard";
 import { Search } from "lucide-react";
 import { TrendingServices } from "../../components/home/TrendingServices";
 import { KeyFeaturesSection } from "@/components/home/KeyFeaturesSection";
@@ -21,26 +20,6 @@ export default function Home() {
   );
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
   const [isSlotModalOpen, setIsSlotModalOpen] = useState(false);
-  const [randomServices, setRandomServices] = useState<Service[]>([]);
-
-  useEffect(() => {
-    // Flatten all services into a single array
-    const allServices = Object.values(servicesData).flat();
-
-    // Shuffle the array
-    const shuffled = [...allServices].sort(() => 0.5 - Math.random());
-
-    // Take the first 4
-    // Use setTimeout to avoid synchronous state update warning in strict mode
-    setTimeout(() => {
-      setRandomServices(shuffled.slice(0, 4));
-    }, 0);
-  }, []);
-
-  const handleServiceClick = (serviceId: string) => {
-    setSelectedService(serviceId);
-    setIsServiceModalOpen(true);
-  };
 
   const handleSubServiceClick = (subServiceId: string) => {
     setSelectedSubService(subServiceId);
@@ -66,7 +45,7 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Left Column */}
             <div className="flex flex-col justify-between h-full space-y-8 lg:space-y-0">
-              <div>
+              <div className="pt-12">
                 <h1 className="text-4xl lg:text-5xl font-display font-bold leading-tight">
                   <span className="text-[#1C8AFF]">Book Finance Expert</span>{" "}
                   <span className="text-foreground">
@@ -88,18 +67,8 @@ export default function Home() {
 
             {/* Right Column - Service Cards Grid */}
             <div className="hidden lg:block">
-              <div className="grid grid-cols-2 gap-4 mb-6">
-                {randomServices.map((service) => (
-                  <ServiceCard
-                    key={service.id}
-                    service={service}
-                    variant="compact"
-                    onClick={() => handleServiceClick(service.id)}
-                  />
-                ))}
-              </div>
-
-              <div className="flex justify-end">
+              <TitleServiceCard />
+              <div className="flex justify-end mt-6">
                 <Link
                   href="/services/all"
                   className="text-sm md:text-base font-semibold text-[#1C8AFF] hover:underline flex items-center gap-1"

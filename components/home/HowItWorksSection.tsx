@@ -8,27 +8,18 @@ const steps = [
   {
     id: 1,
     step: "STEP 1",
-    title: "SELECT SERVICE",
+    title: "Select Service",
     description:
       "Choose from our wide range of financial services like GST, ITR, or Company Registration.",
     image: "/assets/aipeSplash.png",
     color: "bg-[#CCE5FF] text-[#1C8AFF]",
     badgeColor: "bg-[#1C8AFF]",
   },
+
   {
     id: 2,
     step: "STEP 2",
-    title: "CHOOSE TIME SLOT",
-    description:
-      "Select a convenient time for your consultation with our experts.",
-    image: "/assets/aipeSplash.png",
-    color: "bg-[#D4EAFF] text-[#1C8AFF]",
-    badgeColor: "bg-[#1C8AFF]",
-  },
-  {
-    id: 3,
-    step: "STEP 3",
-    title: "PAYMENT",
+    title: "Payment",
     description:
       "Securely pay for your selected service using our multiple payment options.",
     image: "/assets/aipeSplash.png",
@@ -36,9 +27,9 @@ const steps = [
     badgeColor: "bg-[#1C8AFF]",
   },
   {
-    id: 4,
-    step: "STEP 4",
-    title: "BOOKING CONFIRMATION",
+    id: 3,
+    step: "STEP 3",
+    title: "Booking Confirmation",
     description:
       "Receive instant confirmation of your booking with all the details.",
     image: "/assets/aipeSplash.png",
@@ -46,9 +37,9 @@ const steps = [
     badgeColor: "bg-[#1C8AFF]",
   },
   {
-    id: 5,
-    step: "STEP 5",
-    title: "EXPERT ASSIGNED",
+    id: 4,
+    step: "STEP 4",
+    title: "Expert Assigned",
     description:
       "A dedicated CA, CS, or Investment Expert is assigned to your tasks instantly.",
     image: "/assets/aipeSplash.png",
@@ -56,9 +47,9 @@ const steps = [
     badgeColor: "bg-[#1C8AFF]",
   },
   {
-    id: 6,
-    step: "STEP 6",
-    title: "WORK DONE",
+    id: 5,
+    step: "STEP 5",
+    title: "Work Done",
     description:
       "Track progress in real-time. Receive your filed documents and certificates directly on the app.",
     image: "/assets/aipeSplash.png",
@@ -131,7 +122,7 @@ const Card = ({
         >
           {step.step}
         </span>
-        <h3 className="text-3xl font-bold text-foreground mb-4 font-display uppercase leading-tight">
+        <h3 className="text-3xl font-bold text-foreground mb-4 font-display leading-tight">
           {step.title}
         </h3>
         <p className="text-muted-foreground text-base leading-relaxed font-medium">
@@ -156,7 +147,7 @@ export function HowItWorksSection() {
         <div className="sticky top-0 h-screen flex flex-col items-center justify-start overflow-hidden pt-16 md:pt-24">
           <div className="mb-6 md:mb-8 text-center">
             <h2 className="text-3xl md:text-5xl font-display font-bold text-[#1C8AFF] flex items-center justify-center gap-3">
-              HOW{" "}
+              How{" "}
               <span className="relative h-16 w-24 inline-block">
                 <Image
                   src="/assets/aipe_logo3.png"
@@ -165,7 +156,7 @@ export function HowItWorksSection() {
                   className="object-contain"
                 />
               </span>{" "}
-              WORKS?
+              Works?
             </h2>
           </div>
 
