@@ -3,15 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import {
-  Search,
-  User,
-  Bell,
-  Settings,
-  LogOut,
-  LogIn,
-  Menu,
-} from "lucide-react";
+import { Search, User, Bell, Settings, LogOut, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -33,6 +25,11 @@ import {
 import { useState } from "react";
 import { Check, Trash2 } from "lucide-react";
 import { LocationSelector } from "@/components/layout/LocationSelector";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/lib/store/store";
+import { logout } from "@/lib/store/slices/authSlice";
+import { AuthModal } from "@/components/auth/AuthModal";
+import { OTPModal } from "@/components/auth/OTPModal";
 
 const navLinks = [
   { name: "Services", path: "/services" },
@@ -43,7 +40,9 @@ const navLinks = [
 export function Header() {
   const pathname = usePathname();
   const router = useRouter();
-  const [isSignedIn, setIsSignedIn] = useState(true);
+  const dispatch = useDispatch();
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   // Notification State
   const [notifications, setNotifications] = useState([
@@ -209,142 +208,154 @@ export function Header() {
               />
             </div>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="relative text-muted-foreground hover:text-primary"
-                >
-                  <Bell className="w-5 h-5" />
-                  {unreadCount > 0 && (
-                    <span className="absolute top-2 right-2 w-2 h-2 bg-destructive rounded-full border-2 border-background animate-pulse" />
-                  )}
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-80 p-0">
-                <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/30">
-                  <span className="font-semibold text-sm">Notifications</span>
-                  {unreadCount > 0 && (
-                    <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full font-medium">
-                      {unreadCount} New
-                    </span>
-                  )}
-                </div>
+            {!isAuthenticated ? (
+              <Button
+                className="bg-[#1C8AFF]"
+                onClick={() => setIsAuthModalOpen(true)}
+              >
+                Sign Up / Log In
+              </Button>
+            ) : (
+              <>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="relative text-muted-foreground hover:text-primary"
+                    >
+                      <Bell className="w-5 h-5" />
+                      {unreadCount > 0 && (
+                        <span className="absolute top-2 right-2 w-2 h-2 bg-destructive rounded-full border-2 border-background animate-pulse" />
+                      )}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-80 p-0">
+                    <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/30">
+                      <span className="font-semibold text-sm">
+                        Notifications
+                      </span>
+                      {unreadCount > 0 && (
+                        <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full font-medium">
+                          {unreadCount} New
+                        </span>
+                      )}
+                    </div>
 
-                <div className="max-h-[300px] overflow-y-auto">
-                  {notifications.length > 0 ? (
-                    notifications.map((notification) => (
-                      <DropdownMenuItem
-                        key={notification.id}
-                        className={`px-4 py-3 focus:bg-muted/50 cursor-pointer border-b border-border/50 last:border-0 relative block ${!notification.read ? "bg-primary/5" : ""}`}
-                        onSelect={() =>
-                          handleNotificationClick(
-                            notification.id,
-                            notification.bookingId,
-                          )
-                        }
-                      >
-                        <div className="flex justify-between items-start gap-3 w-full">
-                          <div className="flex-1 space-y-1">
-                            <div className="flex justify-between items-start">
-                              <p
-                                className={`text-sm leading-none ${!notification.read ? "font-semibold text-foreground" : "text-muted-foreground"}`}
-                              >
-                                {notification.title}
-                              </p>
-                              {notification.bookingId && (
-                                <span className="text-[10px] font-mono bg-muted px-1.5 py-0.5 rounded text-muted-foreground ml-2 shrink-0">
-                                  #{notification.bookingId}
-                                </span>
+                    <div className="max-h-[300px] overflow-y-auto">
+                      {notifications.length > 0 ? (
+                        notifications.map((notification) => (
+                          <DropdownMenuItem
+                            key={notification.id}
+                            className={`px-4 py-3 focus:bg-muted/50 cursor-pointer border-b border-border/50 last:border-0 relative block ${!notification.read ? "bg-primary/5" : ""}`}
+                            onSelect={() =>
+                              handleNotificationClick(
+                                notification.id,
+                                notification.bookingId,
+                              )
+                            }
+                          >
+                            <div className="flex justify-between items-start gap-3 w-full">
+                              <div className="flex-1 space-y-1">
+                                <div className="flex justify-between items-start">
+                                  <p
+                                    className={`text-sm leading-none ${!notification.read ? "font-semibold text-foreground" : "text-muted-foreground"}`}
+                                  >
+                                    {notification.title}
+                                  </p>
+                                  {notification.bookingId && (
+                                    <span className="text-[10px] font-mono bg-muted px-1.5 py-0.5 rounded text-muted-foreground ml-2 shrink-0">
+                                      #{notification.bookingId}
+                                    </span>
+                                  )}
+                                </div>
+                                <p className="text-xs text-muted-foreground line-clamp-2 mt-1">
+                                  {notification.desc}
+                                </p>
+                                <p className="text-[10px] text-muted-foreground/70 pt-1">
+                                  {notification.time}
+                                </p>
+                              </div>
+                              {!notification.read && (
+                                <span className="h-2 w-2 rounded-full bg-primary mt-1.5 shrink-0" />
                               )}
                             </div>
-                            <p className="text-xs text-muted-foreground line-clamp-2 mt-1">
-                              {notification.desc}
-                            </p>
-                            <p className="text-[10px] text-muted-foreground/70 pt-1">
-                              {notification.time}
-                            </p>
-                          </div>
-                          {!notification.read && (
-                            <span className="h-2 w-2 rounded-full bg-primary mt-1.5 shrink-0" />
-                          )}
+                          </DropdownMenuItem>
+                        ))
+                      ) : (
+                        <div className="p-8 text-center text-muted-foreground text-sm">
+                          No notifications
                         </div>
-                      </DropdownMenuItem>
-                    ))
-                  ) : (
-                    <div className="p-8 text-center text-muted-foreground text-sm">
-                      No notifications
+                      )}
                     </div>
-                  )}
-                </div>
 
-                {notifications.length > 0 && (
-                  <div className="p-2 border-t border-border grid grid-cols-2 gap-2 bg-muted/30">
+                    {notifications.length > 0 && (
+                      <div className="p-2 border-t border-border grid grid-cols-2 gap-2 bg-muted/30">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="text-xs h-8 text-muted-foreground hover:text-primary w-full justify-center"
+                          onClick={markAllRead}
+                        >
+                          <Check className="w-3 h-3 mr-1.5" />
+                          Mark all read
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="text-xs h-8 text-destructive hover:text-destructive hover:bg-destructive/10 w-full justify-center"
+                          onClick={clearAll}
+                        >
+                          <Trash2 className="w-3 h-3 mr-1.5" />
+                          Clear all
+                        </Button>
+                      </div>
+                    )}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
                     <Button
                       variant="ghost"
-                      size="sm"
-                      className="text-xs h-8 text-muted-foreground hover:text-primary w-full justify-center"
-                      onClick={markAllRead}
+                      size="icon"
+                      className="text-muted-foreground hover:text-primary"
                     >
-                      <Check className="w-3 h-3 mr-1.5" />
-                      Mark all read
+                      <User className="w-5 h-5" />
                     </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="text-xs h-8 text-destructive hover:text-destructive hover:bg-destructive/10 w-full justify-center"
-                      onClick={clearAll}
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      className="cursor-pointer"
+                      onSelect={() => router.push("/profile")}
                     >
-                      <Trash2 className="w-3 h-3 mr-1.5" />
-                      Clear all
-                    </Button>
-                  </div>
-                )}
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-muted-foreground hover:text-primary"
-                >
-                  <User className="w-5 h-5" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem className="cursor-pointer">
-                  <User className="mr-2 h-4 w-4" />
-                  <span>Profile</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">
-                  <Settings className="mr-2 h-4 w-4" />
-                  <span>Settings</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  className="cursor-pointer"
-                  onSelect={() => setIsSignedIn(!isSignedIn)}
-                >
-                  {isSignedIn ? (
-                    <>
+                      <User className="mr-2 h-4 w-4" />
+                      <span>Profile</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="cursor-pointer">
+                      <Settings className="mr-2 h-4 w-4" />
+                      <span>Settings</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      className="cursor-pointer"
+                      onSelect={() => dispatch(logout())}
+                    >
                       <LogOut className="mr-2 h-4 w-4" />
                       <span>Sign Out</span>
-                    </>
-                  ) : (
-                    <>
-                      <LogIn className="mr-2 h-4 w-4" />
-                      <span>Sign In</span>
-                    </>
-                  )}
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </>
+            )}
           </div>
+          <AuthModal
+            isOpen={isAuthModalOpen}
+            onClose={() => setIsAuthModalOpen(false)}
+          />
+          <OTPModal />
         </div>
       </div>
     </header>
