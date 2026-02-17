@@ -1,9 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface User {
-  name: string;
-  mobile: string;
-  email?: string;
+  id: string;
+  firstName?: string | null;
+  lastName?: string | null;
+  mobile: string; // Mapped from phone in API
+  email?: string | null;
+  status?: string;
+  // Legacy fields (optional for now)
   address?: string;
   profession?: string;
   description?: string;
@@ -13,24 +17,31 @@ interface User {
 
 interface AuthState {
   user: User | null;
+  token: string | null;
   isAuthenticated: boolean;
   loading: boolean;
   error: string | null;
   otpSent: boolean;
+  tempIdentifier: string | null; // To store mobile between steps
 }
 
 const initialState: AuthState = {
   user: null,
+  token: null,
   isAuthenticated: false,
   loading: false,
   error: null,
   otpSent: false,
+  tempIdentifier: null,
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    setTempIdentifier: (state, action: PayloadAction<string>) => {
+      state.tempIdentifier = action.payload;
+    },
     loginStart: (state) => {
       state.loading = true;
       state.error = null;
@@ -39,12 +50,21 @@ const authSlice = createSlice({
       state.loading = false;
       state.otpSent = true;
     },
-    loginSuccess: (state, action: PayloadAction<User>) => {
+    loginSuccess: (
+      state,
+      action: PayloadAction<{ user: User; token: string }>,
+    ) => {
       state.loading = false;
       state.isAuthenticated = true;
-      state.user = action.payload;
+      state.user = action.payload.user;
+      state.token = action.payload.token;
       state.otpSent = false;
       state.error = null;
+      state.tempIdentifier = null;
+      // Save token to local storage
+      if (typeof window !== "undefined") {
+        localStorage.setItem("accessToken", action.payload.token);
+      }
     },
     loginFailure: (state, action: PayloadAction<string>) => {
       state.loading = false;
@@ -52,8 +72,12 @@ const authSlice = createSlice({
     },
     logout: (state) => {
       state.user = null;
+      state.token = null;
       state.isAuthenticated = false;
       state.otpSent = false;
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("accessToken");
+      }
     },
     updateProfile: (state, action: PayloadAction<Partial<User>>) => {
       if (state.user) {
@@ -69,6 +93,7 @@ const authSlice = createSlice({
 });
 
 export const {
+  setTempIdentifier,
   loginStart,
   otpSentSuccess,
   loginSuccess,

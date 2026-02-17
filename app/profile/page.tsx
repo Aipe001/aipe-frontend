@@ -50,7 +50,7 @@ export default function ProfilePage() {
   } = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      name: user?.name || "",
+      name: `${user?.firstName || ""} ${user?.lastName || ""}`.trim(),
       email: user?.email || "",
       address: user?.address || "",
       profession: user?.profession || "",
@@ -119,7 +119,8 @@ export default function ProfilePage() {
 
                 <div className="flex-1 text-center sm:text-left space-y-1 pb-2 mt-4 sm:mt-0">
                   <h1 className="text-2xl font-bold text-foreground">
-                    {user?.name || "Guest User"}
+                    {`${user?.firstName || ""} ${user?.lastName || ""}`.trim() ||
+                      "Guest User"}
                   </h1>
                   <p className="text-muted-foreground flex items-center justify-center sm:justify-start gap-2 text-sm">
                     <Briefcase className="w-4 h-4" />
