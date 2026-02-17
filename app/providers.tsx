@@ -8,12 +8,15 @@ import { useState } from "react";
 import { Provider } from "react-redux";
 import { store } from "@/lib/store/store";
 
+import { AuthInitializer } from "@/components/auth/AuthInitializer";
+
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
 
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
+        <AuthInitializer />
         <TooltipProvider>
           {children}
           <Toaster />

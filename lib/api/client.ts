@@ -22,6 +22,15 @@ export async function apiClient<T>(
 
   const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
 
+  if (response.status === 401) {
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("user");
+      window.location.href = "/";
+    }
+    throw new Error("Unauthorized");
+  }
+
   if (!response.ok) {
     const errorBody = await response.json().catch(() => ({}));
     throw new Error(errorBody.message || "Something went wrong");

@@ -61,9 +61,10 @@ const authSlice = createSlice({
       state.otpSent = false;
       state.error = null;
       state.tempIdentifier = null;
-      // Save token to local storage
+      // Save token and user to local storage
       if (typeof window !== "undefined") {
         localStorage.setItem("accessToken", action.payload.token);
+        localStorage.setItem("user", JSON.stringify(action.payload.user));
       }
     },
     loginFailure: (state, action: PayloadAction<string>) => {
@@ -77,6 +78,7 @@ const authSlice = createSlice({
       state.otpSent = false;
       if (typeof window !== "undefined") {
         localStorage.removeItem("accessToken");
+        localStorage.removeItem("user");
       }
     },
     updateProfile: (state, action: PayloadAction<Partial<User>>) => {
