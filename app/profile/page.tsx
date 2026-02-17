@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -68,12 +69,17 @@ export default function ProfilePage() {
     dispatch(logout());
   };
 
+  const handleAuthModalClose = () => {
+    toast.error("Login process not completed.");
+    router.push("/");
+  };
+
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background/50 backdrop-blur-sm relative">
         <div className="absolute inset-0 bg-background/20 backdrop-blur-md z-10" />
         <div className="z-20">
-          <AuthModal isOpen={true} onClose={() => router.push("/")} />
+          <AuthModal isOpen={true} onClose={handleAuthModalClose} />
           <OTPModal />
         </div>
       </div>
