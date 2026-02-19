@@ -1,102 +1,73 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ServiceCard } from "@/components/ServiceCard";
-
-// Service Data Interface
-export interface Service {
-  id: string;
-  title: string;
-  image: string;
-}
-
-// Hardcoded Data
-export const servicesData: Record<string, Service[]> = {
-  "Credits and Loans": [
-    { id: "loan-1", title: "Apply for Loan", image: "/assets/loan_assist.png" },
-    {
-      id: "loan-2",
-      title: "Improve CIBIL",
-      image: "/assets/improve_credit_score.png",
-    },
-    {
-      id: "loan-3",
-      title: "Foreign Education Loan",
-      image: "/assets/loan_experts.png",
-    },
-  ],
-  Taxation: [
-    { id: "tax-1", title: "TDS Claim", image: "/assets/taxation.png" },
-    {
-      id: "tax-2",
-      title: "Foreign Remittance",
-      image: "/assets/itr_filing.png",
-    },
-    {
-      id: "tax-3",
-      title: "Capital Gains Tax",
-      image: "/assets/gst_filing.png",
-    },
-  ],
-  Investment: [
-    {
-      id: "inv-1",
-      title: "Setup SIP",
-      image: "/assets/mutual_fund_expert.png",
-    },
-    {
-      id: "inv-2",
-      title: "Mutual Funds",
-      image: "/assets/stock_equity_experts.png",
-    },
-    {
-      id: "inv-3",
-      title: "Stock Investment",
-      image: "/assets/intraday_trading.png",
-    },
-    {
-      id: "inv-4",
-      title: "Future and Options",
-      image: "/assets/gold_silver_expert.png",
-    },
-  ],
-  Apply: [
-    {
-      id: "apply-1",
-      title: "GST Registration",
-      image: "/assets/apply_new_gst.png",
-    },
-    {
-      id: "apply-2",
-      title: "New Business Registration",
-      image: "/assets/start_up_register.png",
-    },
-  ],
-  Filing: [
-    { id: "file-1", title: "File ITR", image: "/assets/itr_filing.png" },
-    {
-      id: "file-2",
-      title: "File for GST Claim",
-      image: "/assets/gst_filing.png",
-    },
-  ],
-  Registrations: [
-    {
-      id: "reg-1",
-      title: "GST Registration",
-      image: "/assets/apply_new_gst.png",
-    },
-    {
-      id: "reg-2",
-      title: "New Business Registration",
-      image: "/assets/start_up_register.png",
-    },
-  ],
-};
+import {
+  getServiceCategories,
+  getAllServices,
+  Service,
+  ServiceCategory,
+} from "@/lib/api/services";
+import { Loader2 } from "lucide-react";
 
 export default function BookingPage() {
-  const [activeTab, setActiveTab] = useState("Credits and Loans");
+  const [categories, setCategories] = useState<ServiceCategory[]>([]);
+  const [services, setServices] = useState<Service[]>([]);
+  const [activeTab, setActiveTab] = useState<string>("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setLoading(true);
+        const [cats, svcs] = await Promise.all([
+          getServiceCategories(),
+          getAllServices(),
+        ]);
+
+        // Sort categories by displayOrder
+        const sortedCats = cats.sort((a, b) => a.displayOrder - b.displayOrder);
+        setCategories(sortedCats);
+        setServices(svcs);
+
+        if (sortedCats.length > 0) {
+          setActiveTab(sortedCats[0].id);
+        }
+      } catch (err: any) {
+        console.error("Failed to fetch services", err);
+        setError("Failed to load services. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="w-10 h-10 animate-spin text-[#1C8AFF]" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center text-center p-4">
+        <h2 className="text-2xl font-bold text-red-500 mb-2">Error</h2>
+        <p className="text-gray-600">{error}</p>
+        <button
+          onClick={() => window.location.reload()}
+          className="mt-4 px-4 py-2 bg-[#1C8AFF] text-white rounded-lg hover:bg-blue-600"
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background pb-20">
@@ -123,36 +94,54 @@ export default function BookingPage() {
       <section className="py-12">
         <div className="page-container">
           <Tabs
-            defaultValue="Credits and Loans"
+            value={activeTab}
             className="w-full flex flex-col items-center"
             onValueChange={setActiveTab}
           >
-            <TabsList className="w-full max-w-6xl grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 h-auto min-h-14 bg-gray-100 p-1 rounded-2xl mb-12">
-              {Object.keys(servicesData).map((category) => (
+            <TabsList className="w-full max-w-6xl flex flex-wrap justify-center h-auto min-h-14 bg-gray-100 p-1 rounded-2xl mb-12 gap-2">
+              {categories.map((category) => (
                 <TabsTrigger
-                  key={category}
-                  value={category}
-                  className="rounded-xl data-[state=active]:bg-[#1C8AFF] data-[state=active]:text-white text-gray-600 font-semibold py-2 md:py-3 transition-all"
+                  key={category.id}
+                  value={category.id}
+                  className="rounded-xl data-[state=active]:bg-[#1C8AFF] data-[state=active]:text-white text-gray-600 font-semibold py-2 md:py-3 px-4 transition-all"
                 >
-                  {category}
+                  {category.name}
                 </TabsTrigger>
               ))}
             </TabsList>
 
-            {Object.entries(servicesData).map(([category, services]) => (
-              <TabsContent key={category} value={category} className="w-full">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                  {services.map((service) => (
-                    <ServiceCard
-                      key={service.id}
-                      service={service}
-                      variant="default"
-                      onClick={() => {}} // No-op for now, or add navigation if needed
-                    />
-                  ))}
-                </div>
-              </TabsContent>
-            ))}
+            {categories.map((category) => {
+              const categoryServices = services.filter(
+                (s) => s.categoryId === category.id
+              );
+
+              return (
+                <TabsContent
+                  key={category.id}
+                  value={category.id}
+                  className="w-full"
+                >
+                  {categoryServices.length > 0 ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                      {categoryServices.map((service) => (
+                        <ServiceCard
+                          key={service.id}
+                          service={service}
+                          variant="default"
+                          onClick={() => {
+                            /* Handle click */
+                          }}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-12 text-gray-500">
+                      No services found in this category.
+                    </div>
+                  )}
+                </TabsContent>
+              );
+            })}
           </Tabs>
         </div>
       </section>

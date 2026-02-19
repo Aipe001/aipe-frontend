@@ -1,5 +1,5 @@
 export const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 
 interface FetchOptions extends RequestInit {
   headers?: Record<string, string>;
@@ -11,10 +11,15 @@ export async function apiClient<T>(
 ): Promise<T> {
   const { headers, ...customConfig } = options;
 
+  // Auto-attach JWT token if available
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+
   const config: RequestInit = {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...headers,
     },
     ...customConfig,
