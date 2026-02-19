@@ -35,7 +35,7 @@ export default function BookingPage() {
         if (sortedCats.length > 0) {
           setActiveTab(sortedCats[0].id);
         }
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error("Failed to fetch services", err);
         setError("Failed to load services. Please try again later.");
       } finally {
@@ -112,7 +112,7 @@ export default function BookingPage() {
 
             {categories.map((category) => {
               const categoryServices = services.filter(
-                (s) => s.categoryId === category.id
+                (s) => s.categoryId === category.id,
               );
 
               return (

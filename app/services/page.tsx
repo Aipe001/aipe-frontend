@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import Link from "next/link";
 import { TitleServiceCard } from "@/components/home/TitleServiceCard";
 import { Search, Loader2 } from "lucide-react";
 import { TrendingServices } from "../../components/home/TrendingServices";
