@@ -22,7 +22,7 @@ import {
   SheetTrigger,
   SheetClose,
 } from "@/components/ui/sheet";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Check, Trash2 } from "lucide-react";
 import { LocationSelector } from "@/components/layout/LocationSelector";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,6 +30,14 @@ import { RootState } from "@/lib/store/store";
 import { logout } from "@/lib/store/slices/authSlice";
 import { AuthModal } from "@/components/auth/AuthModal";
 import { OTPModal } from "@/components/auth/OTPModal";
+import { formatDistanceToNow } from "date-fns";
+import {
+  getMyNotifications,
+  markNotificationAsRead,
+  markAllNotificationsAsRead,
+  deleteNotification,
+  AppNotification
+} from "@/lib/api/notifications";
 
 const navLinks = [
   { name: "Services", path: "/services" },
@@ -46,45 +54,76 @@ export function Header() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   // Notification State
-  const [notifications, setNotifications] = useState([
-    {
-      id: 1,
-      bookingId: "12345",
-      title: "Booking Confirmed",
-      desc: "Your consultation with Rajesh Kumar is confirmed.",
-      time: "2 min ago",
-      read: false,
-    },
-    {
-      id: 2,
-      bookingId: "12346",
-      title: "Document Verified",
-      desc: "Your GST documents have been verified.",
-      time: "1 hour ago",
-      read: false,
-    },
-  ]);
+  const [notifications, setNotifications] = useState<AppNotification[]>([]);
+  const [unreadCount, setUnreadCount] = useState(0);
 
-  const unreadCount = notifications.filter((n) => !n.read).length;
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
 
-  const handleNotificationClick = (id: number, bookingId?: string) => {
-    // Mark as read
-    setNotifications((prev) =>
-      prev.map((n) => (n.id === id ? { ...n, read: true } : n)),
-    );
+    if (isAuthenticated) {
+      fetchNotifications();
+      // Poll every 30 seconds for MVP
+      interval = setInterval(() => {
+        fetchNotifications();
+      }, 30000);
+    } else {
+      setNotifications([]);
+      setUnreadCount(0);
+    }
 
-    // Navigate if bookingId exists
-    if (bookingId) {
-      router.push(`/consultation/${bookingId}`);
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isAuthenticated]);
+
+  const fetchNotifications = async () => {
+    try {
+      const data = await getMyNotifications();
+      setNotifications(data);
+      setUnreadCount(data.filter(n => !n.isRead).length);
+    } catch (error) {
+      console.error("Error fetching notifications", error);
     }
   };
 
-  const markAllRead = () => {
-    setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
+  const handleNotificationClick = async (id: string, data?: any) => {
+    try {
+      // Mark as read
+      await markNotificationAsRead(id);
+      setNotifications((prev) =>
+        prev.map((n) => (n.id === id ? { ...n, isRead: true } : n)),
+      );
+      setUnreadCount((prev) => Math.max(0, prev - 1));
+
+      // Navigate if bookingId exists
+      if (data?.bookingId) {
+        router.push(`/consultation/${data.bookingId}`);
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 
-  const clearAll = () => {
-    setNotifications([]);
+  const markAllRead = async () => {
+    try {
+      await markAllNotificationsAsRead();
+      setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })));
+      setUnreadCount(0);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const clearAll = async () => {
+    try {
+      for (const n of notifications) {
+        await deleteNotification(n.id);
+      }
+      setNotifications([]);
+      setUnreadCount(0);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
@@ -115,18 +154,17 @@ export function Header() {
                 </SheetHeader>
                 <div className="flex flex-col gap-6 mt-8">
                   {/* Location in Hamburger */}
-                  <LocationSelector className="w-full justify-between py-2 rounded-md" />
+                  {/* <LocationSelector className="w-full justify-between py-2 rounded-md" /> */}
 
                   <div className="flex flex-col gap-2">
                     {navLinks.map((link) => (
                       <SheetClose key={link.path} asChild>
                         <Link
                           href={link.path}
-                          className={`text-base font-medium px-2 py-2 transition-colors hover:text-primary hover:bg-muted/50 rounded-md ${
-                            pathname === link.path
-                              ? "text-primary bg-primary/5"
-                              : "text-muted-foreground"
-                          }`}
+                          className={`text-base font-medium px-2 py-2 transition-colors hover:text-primary hover:bg-muted/50 rounded-md ${pathname === link.path
+                            ? "text-primary bg-primary/5"
+                            : "text-muted-foreground"
+                            }`}
                         >
                           {link.name}
                         </Link>
@@ -164,7 +202,7 @@ export function Header() {
               />
             </Link>
 
-            <LocationSelector />
+            {/* <LocationSelector /> */}
           </div>
 
           {/* Center: Desktop Nav OR Mobile Search */}
@@ -175,11 +213,10 @@ export function Header() {
                 <Link
                   key={link.path}
                   href={link.path}
-                  className={`text-sm font-medium transition-colors hover:text-primary ${
-                    pathname === link.path
-                      ? "text-primary"
-                      : "text-muted-foreground"
-                  }`}
+                  className={`text-sm font-medium transition-colors hover:text-primary ${pathname === link.path
+                    ? "text-primary"
+                    : "text-muted-foreground"
+                    }`}
                 >
                   {link.name}
                 </Link>
@@ -248,11 +285,11 @@ export function Header() {
                         notifications.map((notification) => (
                           <DropdownMenuItem
                             key={notification.id}
-                            className={`px-4 py-3 focus:bg-muted/50 cursor-pointer border-b border-border/50 last:border-0 relative block ${!notification.read ? "bg-primary/5" : ""}`}
+                            className={`px-4 py-3 focus:bg-muted/50 cursor-pointer border-b border-border/50 last:border-0 relative block ${!notification.isRead ? "bg-primary/5" : ""}`}
                             onSelect={() =>
                               handleNotificationClick(
                                 notification.id,
-                                notification.bookingId,
+                                notification.data,
                               )
                             }
                           >
@@ -260,24 +297,24 @@ export function Header() {
                               <div className="flex-1 space-y-1">
                                 <div className="flex justify-between items-start">
                                   <p
-                                    className={`text-sm leading-none ${!notification.read ? "font-semibold text-foreground" : "text-muted-foreground"}`}
+                                    className={`text-sm leading-none ${!notification.isRead ? "font-semibold text-foreground" : "text-muted-foreground"}`}
                                   >
                                     {notification.title}
                                   </p>
-                                  {notification.bookingId && (
+                                  {notification.data?.bookingNumber && (
                                     <span className="text-[10px] font-mono bg-muted px-1.5 py-0.5 rounded text-muted-foreground ml-2 shrink-0">
-                                      #{notification.bookingId}
+                                      {notification.data.bookingNumber}
                                     </span>
                                   )}
                                 </div>
                                 <p className="text-xs text-muted-foreground line-clamp-2 mt-1">
-                                  {notification.desc}
+                                  {notification.body}
                                 </p>
                                 <p className="text-[10px] text-muted-foreground/70 pt-1">
-                                  {notification.time}
+                                  {formatDistanceToNow(new Date(notification.createdAt), { addSuffix: true })}
                                 </p>
                               </div>
-                              {!notification.read && (
+                              {!notification.isRead && (
                                 <span className="h-2 w-2 rounded-full bg-primary mt-1.5 shrink-0" />
                               )}
                             </div>

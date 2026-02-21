@@ -24,7 +24,7 @@ export function ScrollPhoneLayout() {
 
   // Controls vertical position:
   // Starts at 500px down (very low) and moves/scrolls UP to -250px (significantly higher than center)
-  const y = useTransform(scrollYProgress, [0, 1], [265, -300]);
+  const y = useTransform(scrollYProgress, [0, 1], [350, -350]);
 
   return (
     <div ref={containerRef} className="relative bg-background">
@@ -33,7 +33,7 @@ export function ScrollPhoneLayout() {
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden z-20 pointer-events-none">
         <motion.div
           style={{ scale, opacity, y }}
-          className="relative w-[280px] md:w-[340px] lg:w-[500px]"
+          className="relative w-[320px] md:w-[480px] lg:w-[650px] xl:w-[750px]"
         >
           <div className="absolute inset-0 bg-primary/20 blur-3xl rounded-full opacity-50 -z-10"></div>
           <Image

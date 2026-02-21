@@ -1,65 +1,19 @@
 "use client";
 
-import {
-  FileText,
-  Calculator,
-  TrendingUp,
-  Briefcase,
-  Shield,
-  BarChart,
-  Landmark,
-  Scale,
-} from "lucide-react";
+import { useEffect, useState } from "react";
+import { FileText, Loader2 } from "lucide-react";
+import { Service, getAllServices } from "@/lib/api/services";
+import Image from "next/image";
 
-const services = [
-  {
-    icon: FileText,
-    name: "GST",
-    color: "bg-blue-100 text-blue-600",
-    id: "gst",
-  },
-  {
-    icon: Calculator,
-    name: "ITR",
-    color: "bg-green-100 text-green-600",
-    id: "itr",
-  },
-  {
-    icon: TrendingUp,
-    name: "Invest",
-    color: "bg-purple-100 text-purple-600",
-    id: "mutual-funds",
-  },
-  {
-    icon: Briefcase,
-    name: "Loans",
-    color: "bg-orange-100 text-orange-600",
-    id: "loans",
-  },
-  {
-    icon: Shield,
-    name: "Insure",
-    color: "bg-red-100 text-red-600",
-    id: "insurance",
-  },
-  {
-    icon: BarChart,
-    name: "CIBIL",
-    color: "bg-indigo-100 text-indigo-600",
-    id: "cibil",
-  },
-  {
-    icon: Landmark,
-    name: "Bank",
-    color: "bg-teal-100 text-teal-600",
-    id: "banking",
-  }, // New filler
-  {
-    icon: Scale,
-    name: "Trademark",
-    color: "bg-amber-100 text-amber-600",
-    id: "trademark",
-  }, // New filler
+const COLORS = [
+  "bg-blue-100 text-blue-600",
+  "bg-green-100 text-green-600",
+  "bg-purple-100 text-purple-600",
+  "bg-orange-100 text-orange-600",
+  "bg-red-100 text-red-600",
+  "bg-indigo-100 text-indigo-600",
+  "bg-teal-100 text-teal-600",
+  "bg-amber-100 text-amber-600",
 ];
 
 interface ServiceGridProps {
@@ -71,6 +25,23 @@ export function ServiceGrid({
   onServiceClick,
   hasContainer = true,
 }: ServiceGridProps) {
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const data = await getAllServices();
+        setServices(data || []);
+      } catch (err) {
+        console.error("Failed to load services", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchServices();
+  }, []);
+
   const content = (
     <>
       <div className="flex items-center justify-between mb-4 px-1">
@@ -83,22 +54,46 @@ export function ServiceGrid({
       </div>
 
       <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-x-4 gap-y-6">
-        {services.map((service) => (
-          <button
-            key={service.id}
-            onClick={() => onServiceClick(service.id)}
-            className="flex flex-col items-center gap-2 group"
-          >
-            <div
-              className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl md:rounded-3xl ${service.color} flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform duration-200`}
-            >
-              <service.icon className="w-6 h-6 md:w-8 md:h-8" />
-            </div>
-            <span className="text-xs md:text-sm text-center font-medium text-foreground/80 leading-tight">
-              {service.name}
-            </span>
-          </button>
-        ))}
+        {loading ? (
+          <div className="col-span-full py-12 flex justify-center">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          </div>
+        ) : services.length === 0 ? (
+          <div className="col-span-full py-12 text-center text-muted-foreground">
+            No services found.
+          </div>
+        ) : (
+          services.map((service, index) => {
+            const colorClass = COLORS[index % COLORS.length];
+
+            return (
+              <button
+                key={service.id}
+                onClick={() => onServiceClick(service.id)}
+                className="flex flex-col items-center gap-2 group"
+              >
+                <div
+                  className={`w-20 h-20 md:w-28 md:h-28 rounded-[2rem] ${colorClass} flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300 mt-4 overflow-hidden relative`}
+                >
+                  {service.iconUrl ? (
+                    <Image
+                      src={service.iconUrl}
+                      alt={service.name}
+                      width={48}
+                      height={48}
+                      className="w-10 h-10 md:w-12 md:h-12 object-contain"
+                    />
+                  ) : (
+                    <FileText className="w-10 h-10 md:w-12 md:h-12" />
+                  )}
+                </div>
+                <span className="text-base md:text-lg text-center font-bold text-foreground/80 leading-tight translate-y-3">
+                  {service.name}
+                </span>
+              </button>
+            );
+          })
+        )}
       </div>
     </>
   );

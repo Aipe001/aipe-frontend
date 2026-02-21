@@ -1,51 +1,36 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useState, useRef } from "react";
+import { Service, getFeaturedServices } from "@/lib/api/services";
+import { Loader2, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
-interface SpotlightItem {
-  id: number;
-  title: string;
-  subtitle: string;
-  buttonText: string;
-  bgClass: string;
-  image?: string; // Placeholder for future images
-}
-
-const spotlightItems: SpotlightItem[] = [
-  {
-    id: 1,
-    title: "TDS Refund",
-    subtitle: "Get your TDS refund in 30 days",
-    buttonText: "Claim Refund",
-    bgClass: "bg-green-600 text-white",
-  },
-  {
-    id: 2,
-    title: "Mutual Funds",
-    subtitle: "Invest in stocks, sip & mutual funds",
-    buttonText: "Invest",
-    bgClass: "bg-orange-500 text-white",
-  },
-  {
-    id: 3,
-    title: "Improve CIBIL Score",
-    subtitle: "Get your CIBIL score improved by the help of our experts",
-    buttonText: "Improve Now",
-    bgClass: "bg-purple-600 text-white",
-  },
-  {
-    id: 4,
-    title: "GST Registration",
-    subtitle: "Get your GST registration done in 2 days",
-    buttonText: "Apply",
-    bgClass: "bg-pink-600 text-white",
-  },
+const SPOTLIGHT_COLORS = [
+  "bg-green-600 text-white",
+  "bg-orange-500 text-white",
+  "bg-purple-600 text-white",
+  "bg-pink-600 text-white",
+  "bg-[#1C8AFF] text-white",
 ];
 
 export function TrendingServices() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const data = await getFeaturedServices();
+        setServices(data || []);
+      } catch (err) {
+        console.error("Failed to fetch featured services", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchServices();
+  }, []);
 
   const scroll = (direction: "left" | "right") => {
     if (scrollContainerRef.current) {
@@ -89,32 +74,46 @@ export function TrendingServices() {
           ref={scrollContainerRef}
           className="flex gap-4 overflow-x-auto pb-6 -mx-4 px-4 md:-mx-4 md:px-4 scrollbar-hide snap-x snap-mandatory" // Increased pb, added md:-mx-4 md:px-4
         >
-          {spotlightItems.map((item) => (
-            <div
-              key={item.id}
-              className={`flex-none w-[85vw] md:w-[300px] lg:w-[340px] h-40 md:h-48 rounded-2xl p-6 flex flex-col justify-between shadow-lg snap-center ${item.bgClass} relative overflow-hidden`} // Reduced widths
-            >
-              <div className="relative z-10 z-0">
-                <h3 className="font-bold text-xl md:text-2xl mb-1">
-                  {item.title}
-                </h3>
-                <p className="text-white/90 text-sm md:text-base font-medium">
-                  {item.subtitle}
-                </p>
-              </div>
-              <Button
-                variant="secondary"
-                size="sm"
-                className="w-fit bg-white/20 text-white hover:bg-white/30 border-0 backdrop-blur-sm relative z-10"
-              >
-                {item.buttonText}
-              </Button>
-
-              {/* Decorative circles */}
-              <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none" />
-              <div className="absolute -right-4 top-4 w-16 h-16 bg-white/5 rounded-full blur-xl pointer-events-none" />
+          {loading ? (
+            <div className="w-full py-12 flex justify-center">
+              <Loader2 className="w-8 h-8 animate-spin text-primary" />
             </div>
-          ))}
+          ) : services.length === 0 ? (
+            <div className="w-full py-12 text-center text-muted-foreground">
+              No featured services available based on backend configuration.
+            </div>
+          ) : (
+            services.map((item, index) => {
+              const bgClass = SPOTLIGHT_COLORS[index % SPOTLIGHT_COLORS.length];
+
+              return (
+                <div
+                  key={item.id}
+                  className={`flex-none w-[90vw] md:w-[400px] lg:w-[480px] h-[240px] md:h-[280px] rounded-[2rem] p-8 flex flex-col justify-between shadow-xl snap-center ${bgClass} relative overflow-hidden`}
+                >
+                  <div className="relative z-10 translate-y-8 md:translate-y-12 flex flex-col items-center text-center">
+                    <h3 className="font-extrabold text-3xl md:text-4xl mb-2">
+                      {item.name}
+                    </h3>
+                    <p className="text-white/95 text-lg md:text-xl font-semibold px-4">
+                      {item.shortDescription || item.description || "Discover this premium service today."}
+                    </p>
+                  </div>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    className="w-fit bg-white/20 text-white hover:bg-white/30 border-0 backdrop-blur-sm relative z-10"
+                  >
+                    View Details
+                  </Button>
+
+                  {/* Decorative circles */}
+                  <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none" />
+                  <div className="absolute -right-4 top-4 w-16 h-16 bg-white/5 rounded-full blur-xl pointer-events-none" />
+                </div>
+              );
+            })
+          )}
         </div>
       </div>
     </section>

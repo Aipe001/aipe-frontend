@@ -11,7 +11,6 @@ export interface ServiceCategory {
 export enum ServiceType {
     ON_DEMAND = 'on_demand',
     END_TO_END = 'end_to_end',
-    BOTH = 'both',
 }
 
 export interface Service {
@@ -24,6 +23,8 @@ export interface Service {
     basePrice: number;
     onDemandPrice?: number;
     endToEndPrice?: number;
+    serviceFee?: number;
+    gstPercentage?: number;
     iconUrl?: string;
     imageUrl?: string;
     isFeatured: boolean;

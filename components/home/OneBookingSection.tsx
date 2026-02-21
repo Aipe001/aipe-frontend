@@ -88,7 +88,7 @@ export function OneBookingSection() {
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="text-center z-10 mt-0 mb-32 relative"
+        className="text-center z-10 mt-12 mb-32 relative"
       >
         <h2 className="text-4xl md:text-6xl font-display font-bold text-white tracking-wider leading-none drop-shadow-lg">
           Book Finance Expert <br />
@@ -102,11 +102,10 @@ export function OneBookingSection() {
         className="absolute top-28 left-8 md:block z-20 w-[380px] h-[142px]"
       >
         <div
-          className={`${
-            isCardFixed
-              ? "fixed bottom-[72px] left-8 z-50 transition-none scale-100 origin-bottom-left"
-              : "absolute top-0 left-0 scale-100 origin-top-left"
-          } bg-white rounded-3xl p-3 shadow-2xl flex items-center gap-2 border border-gray-100 min-w-[200px]`}
+          className={`${isCardFixed
+            ? "fixed bottom-[72px] left-8 z-50 transition-none scale-100 origin-bottom-left"
+            : "absolute top-0 left-0 scale-100 origin-top-left"
+            } bg-white rounded-3xl p-3 shadow-2xl flex items-center gap-2 border border-gray-100 min-w-[200px]`}
         >
           {/* Left Side: Text + Logo */}
           <div className="flex flex-col items-start gap-0">
@@ -148,7 +147,7 @@ export function OneBookingSection() {
             {[...tasks, ...tasks, ...tasks, ...tasks].map((item, i) => (
               <div
                 key={i}
-                className="w-60 h-60 bg-white rounded-3xl pb-4 flex flex-col gap-4 shadow-xl shrink-0 transition-transform duration-300 overflow-hidden"
+                className="w-72 h-84 bg-white rounded-3xl pb-4 flex flex-col gap-4 shadow-xl shrink-0 transition-transform duration-300 overflow-hidden"
               >
                 <div className="flex-1 bg-secondary rounded-2xl overflow-hidden flex items-center justify-center relative">
                   <Image
@@ -173,11 +172,10 @@ export function OneBookingSection() {
         className="absolute bottom-8 right-8 z-20 w-[160px] h-[52px]" // Sentinel occupies space
       >
         <div
-          className={`${
-            isFixed
-              ? "fixed bottom-[72px] right-8 z-50 transition-none"
-              : "absolute bottom-0 right-0"
-          }`}
+          className={`${isFixed
+            ? "fixed bottom-[72px] right-8 z-50 transition-none"
+            : "absolute bottom-0 right-0"
+            }`}
         >
           <button className="bg-white text-[#1C8AFF] flex items-center gap-2 px-6 py-3 rounded-full font-bold shadow-lg hover:bg-gray-100 transition-colors">
             <span className="text-lg">Write to us</span>

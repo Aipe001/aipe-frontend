@@ -99,7 +99,7 @@ const Card = ({
         opacity: opacitySpring,
         zIndex: index + 1,
       }}
-      className="absolute top-0 w-full max-w-3xl h-[400px] flex rounded-3xl shadow-2xl overflow-hidden border border-gray-100 bg-white"
+      className="absolute top-0 w-full max-w-4xl h-[460px] flex rounded-3xl shadow-2xl overflow-hidden border border-gray-100 bg-white"
     >
       {/* Visual Side */}
       <div
@@ -122,10 +122,10 @@ const Card = ({
         >
           {step.step}
         </span>
-        <h3 className="text-3xl font-bold text-foreground mb-4 font-display leading-tight">
+        <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-display leading-tight">
           {step.title}
         </h3>
-        <p className="text-muted-foreground text-base leading-relaxed font-medium">
+        <p className="text-muted-foreground text-base md:text-lg leading-relaxed font-medium">
           {step.description}
         </p>
       </div>
@@ -144,7 +144,7 @@ export function HowItWorksSection() {
     <section className="bg-gray-50/50">
       {/* Increased height to accommodate more scroll distance for 6 cards */}
       <div ref={containerRef} className="relative h-[800vh]">
-        <div className="sticky top-0 h-screen flex flex-col items-center justify-start overflow-hidden pt-16 md:pt-24">
+        <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden">
           <div className="mb-6 md:mb-8 text-center">
             <h2 className="text-3xl md:text-5xl font-display font-bold text-[#1C8AFF] flex items-center justify-center gap-3">
               How{" "}
@@ -160,7 +160,7 @@ export function HowItWorksSection() {
             </h2>
           </div>
 
-          <div className="relative w-full max-w-3xl h-[600px] flex items-center justify-center">
+          <div className="relative w-full max-w-4xl h-[650px] flex items-center justify-center">
             {steps.map((step, index) => (
               <Card
                 key={step.id}
