@@ -13,6 +13,7 @@ interface User {
   description?: string;
   profilePhoto?: string;
   govtId?: string;
+  isExpert?: boolean;
 }
 
 interface AuthState {

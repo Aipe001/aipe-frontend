@@ -33,7 +33,7 @@ export function ScrollPhoneLayout() {
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden z-20 pointer-events-none">
         <motion.div
           style={{ scale, opacity, y }}
-          className="relative w-[320px] md:w-[480px] lg:w-[650px] xl:w-[750px]"
+          className="relative w-[320px] md:w-[480px] lg:w-[650px] xl:w-[650px]"
         >
           <div className="absolute inset-0 bg-primary/20 blur-3xl rounded-full opacity-50 -z-10"></div>
           <Image

@@ -73,6 +73,10 @@ export const getExpertBookingRequests = async (): Promise<BookingRequest[]> => {
     return apiClient<BookingRequest[]>("/bookings/requests/expert");
 };
 
+export const getExpertBookings = async (): Promise<Booking[]> => {
+    return apiClient<Booking[]>("/bookings/expert");
+};
+
 export const acceptBookingRequest = async (id: string): Promise<any> => {
     return apiClient<any>(`/bookings/requests/${id}/accept`, {
         method: "PATCH",

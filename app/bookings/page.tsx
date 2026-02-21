@@ -10,13 +10,13 @@ import { RootState } from "@/lib/store/store";
 import { AuthModal } from "@/components/auth/AuthModal";
 import { OTPModal } from "@/components/auth/OTPModal";
 import { toast } from "sonner";
-import { getMyBookings, getMyBookingRequests, Booking, BookingRequest } from "@/lib/api/bookings";
+import { getMyBookings, getMyBookingRequests, getExpertBookings, getExpertBookingRequests, Booking, BookingRequest } from "@/lib/api/bookings";
 import { Loader2 } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export default function Bookings() {
   const router = useRouter();
-  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
 
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [bookingRequests, setBookingRequests] = useState<BookingRequest[]>([]);
@@ -28,17 +28,38 @@ export default function Bookings() {
     } else {
       setLoading(false);
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, user]);
 
   const fetchBookings = async () => {
     try {
       setLoading(true);
-      const [bookingsData, requestsData] = await Promise.all([
+      const isExpert = user?.isExpert;
+      const promises: any[] = [
         getMyBookings(),
         getMyBookingRequests(),
-      ]);
-      setBookings(bookingsData);
-      setBookingRequests(requestsData);
+      ];
+      if (isExpert) {
+        promises.push(getExpertBookings());
+        promises.push(getExpertBookingRequests());
+      }
+
+      const results = await Promise.all(promises);
+
+      let allBookings: Booking[] = results[0];
+      let allRequests: BookingRequest[] = results[1];
+
+      if (isExpert) {
+        // Merge expert bookings and remove duplicates
+        allBookings = [...allBookings, ...results[2]];
+        allRequests = [...allRequests, ...results[3]];
+      }
+
+      // Deduplicate bookings by ID
+      allBookings = Array.from(new Map(allBookings.map(b => [b.id, b])).values());
+      allRequests = Array.from(new Map(allRequests.map(r => [r.id, r])).values());
+
+      setBookings(allBookings);
+      setBookingRequests(allRequests);
     } catch (error) {
       toast.error("Failed to load bookings");
       console.error(error);
@@ -80,11 +101,22 @@ export default function Bookings() {
     router.push(`/consultation/${bookingId}`);
   };
 
-  const getExpertName = (booking: Booking) => {
-    if (booking.expert?.user?.firstName) {
-      return `${booking.expert.user.firstName} ${booking.expert.user.lastName || ""}`.trim();
+  const getParticipantName = (booking: any) => {
+    const isMyExpertBooking = user?.isExpert && booking.expert?.userId === user.id;
+
+    if (isMyExpertBooking) {
+      // Booking entity uses .user, BookingRequest uses .customer
+      const customer = booking.user || booking.customer;
+      if (customer?.firstName) {
+        return `Customer: ${customer.firstName} ${customer.lastName || ""}`.trim();
+      }
+      return "Customer Details";
     }
-    return "Assigned Expert";
+
+    if (booking.expert?.user?.firstName) {
+      return `Expert: ${booking.expert.user.firstName} ${booking.expert.user.lastName || ""}`.trim();
+    }
+    return "Expert: Assigned";
   };
 
   const getServiceName = (booking: Booking | BookingRequest) => {
@@ -149,7 +181,7 @@ export default function Bookings() {
                                   Request for {getServiceName(request)}
                                 </h3>
                                 <p className="text-sm text-muted-foreground">
-                                  Expert: {getExpertName(request as any)}
+                                  {getParticipantName(request)}
                                 </p>
                               </div>
                               <div className="flex flex-col gap-1 text-right max-md:text-left">
@@ -206,7 +238,7 @@ export default function Bookings() {
                                 Status: {statusDisplay.label}
                               </p>
                               <p className="text-sm text-muted-foreground">
-                                Expert: {getExpertName(booking)}
+                                {getParticipantName(booking)}
                               </p>
                             </div>
                             <div className="flex flex-col gap-2 min-w-35">

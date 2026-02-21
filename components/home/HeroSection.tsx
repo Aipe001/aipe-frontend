@@ -22,10 +22,10 @@ export function HeroSection({ hidePhone = false }: HeroSectionProps) {
 
         {/* Hero Text */}
         <div className="page-container w-full">
-          <div className="space-y-4 mb-8 md:mb-12 max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-display font-extrabold tracking-tight text-foreground leading-[1.1] text-balance">
+          <div className="space-y-2 mb-8 md:mb-12 max-w-4xl mx-auto">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-extrabold tracking-tight text-foreground leading-[1.1] text-balance">
               India&apos;s First <br />
-              <span className="relative inline-block text-[#1C8AFF]">
+              <span className="relative inline-block whitespace-nowrap text-[#1C8AFF]">
                 Quick Finance Service
                 <span className="absolute bottom-1 left-0 w-full h-3 md:h-5 bg-[#1C8AFF]/20 -z-10 skew-x-12 transform"></span>
               </span>
